@@ -29,8 +29,8 @@ INCLUDES = $(INCLUDES_DIR)/ClickButton.h \
            $(INCLUDES_DIR)/Player.h \
            $(INCLUDES_DIR)/TextureManager.h   
 
-SRC = $(SRC_DIR)/ClickButton.cpp \
-      $(SRC_DIR)/flappyBird.cpp \
+SRC = $(SRC_DIR)/main.cpp \
+      $(SRC_DIR)/ClickButton.cpp \
       $(SRC_DIR)/Game.cpp \
       $(SRC_DIR)/GameOverState.cpp \
       $(SRC_DIR)/GameStateMachine.cpp \
