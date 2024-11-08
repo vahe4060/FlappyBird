@@ -1,49 +1,49 @@
-#include "inputHandler.h"
+#include "InputHandler.h"
 #include <cassert>
-#include "game.h"
+#include "Game.h"
 
 
-inputHandler* inputHandler::instance_ = nullptr;
+InputHandler* InputHandler::instance_ = nullptr;
 
-inputHandler* inputHandler::instance()
+InputHandler* InputHandler::instance()
 {
 	if (instance_ == nullptr)
-		instance_ = new inputHandler();
+		instance_ = new InputHandler();
 
 	return instance_;
 }
 
-inputHandler::~inputHandler()
+InputHandler::~InputHandler()
 {
 	std::cout << "\n\ninput handler went out of scope....\n\n";
 }
 
-inputHandler::inputHandler()
+InputHandler::InputHandler()
 {
 	clear();
 	keystate = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
 }
 
-void inputHandler::clear()
+void InputHandler::clear()
 {
 	for (int i = 0; i < 3; i++)
 		MouseButtons[i] = false;
 }
 
-std::pair<int, int> inputHandler::getMousePos()
+std::pair<int, int> InputHandler::getMousePos()
 {
 	return MousePosition;
 }
 
 
 
-bool inputHandler::isMouseButtonDown(int buttonNumber)
+bool InputHandler::isMouseButtonDown(int buttonNumber)
 {
 	return MouseButtons[buttonNumber];
 }
 
 
-bool inputHandler::isKeyDown(SDL_Scancode key)
+bool InputHandler::isKeyDown(SDL_Scancode key)
 {
 	if (keystate != nullptr)
 	{
@@ -57,7 +57,7 @@ bool inputHandler::isKeyDown(SDL_Scancode key)
 
 
 
-void inputHandler::update()
+void InputHandler::update()
 {
 	SDL_Event Event;
 
@@ -88,7 +88,7 @@ void inputHandler::update()
 
 		case SDL_QUIT:
 		{
-			game::instance()->quit(); break;
+			Game::instance()->quit(); break;
 		}
 		default:
 			break;
@@ -98,13 +98,13 @@ void inputHandler::update()
 
 }
 
-void inputHandler::onMouseMotion(SDL_Event& Event)
+void InputHandler::onMouseMotion(SDL_Event& Event)
 {
 	MousePosition.first = Event.motion.x;
 	MousePosition.second = Event.motion.y;
 }
 
-void inputHandler::onMouseButtonDown(SDL_Event& Event)
+void InputHandler::onMouseButtonDown(SDL_Event& Event)
 {
 	if (Event.button.button == SDL_BUTTON_LEFT)
 	{
@@ -125,7 +125,7 @@ void inputHandler::onMouseButtonDown(SDL_Event& Event)
 	}
 }
 
-void inputHandler::onMouseButtonUp(SDL_Event& Event)
+void InputHandler::onMouseButtonUp(SDL_Event& Event)
 {
 	if (Event.button.button == SDL_BUTTON_LEFT)
 	{
@@ -146,7 +146,7 @@ void inputHandler::onMouseButtonUp(SDL_Event& Event)
 	}
 }
 
-void inputHandler::onKeyDown(SDL_Event& Event)
+void InputHandler::onKeyDown(SDL_Event& Event)
 {
 	if (Event.key.type == SDL_SCANCODE_RIGHT)
 	{
@@ -176,7 +176,7 @@ void inputHandler::onKeyDown(SDL_Event& Event)
 
 }
 
-void inputHandler::onKeyUp(SDL_Event& Event)
+void InputHandler::onKeyUp(SDL_Event& Event)
 {
 	if (Event.key.type == SDL_SCANCODE_RIGHT)
 	{

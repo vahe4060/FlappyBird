@@ -1,6 +1,6 @@
-#include "gameStateMachine.h"
+#include "GameStateMachine.h"
 
-gameStateMachine::~gameStateMachine()
+GameStateMachine::~GameStateMachine()
 {
 	while (!states.empty())
 	{
@@ -9,7 +9,7 @@ gameStateMachine::~gameStateMachine()
 }
 
 
-void gameStateMachine::popState()
+void GameStateMachine::popState()
 {
 	if (!states.empty())
 	{
@@ -21,19 +21,19 @@ void gameStateMachine::popState()
 	}
 }
 
-void gameStateMachine::pushState(gameState* newstate)
+void GameStateMachine::pushState(GameState* newstate)
 {
 	states.push_back(newstate);
 	states.back()->onEnter();
 }
 
-void gameStateMachine::update()
+void GameStateMachine::update()
 {
 	if (!states.empty())
 		states.back()->update();
 }
 
-void gameStateMachine::render()
+void GameStateMachine::render()
 {
 	if (!states.empty())
 		states.back()->render();

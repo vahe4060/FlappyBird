@@ -2,7 +2,7 @@
 #include "LoaderParams.h"
 #include "SDL.h"
 #include "SDL_image.h"
-#include "textureManager.h"
+#include "TextureManager.h"
 
 class gameObject
 {
@@ -20,12 +20,12 @@ public:
 
 	virtual ~gameObject() 
 	{
-		textureManager::instance()->erase(id);
+		TextureManager::instance()->erase(id);
 	}
 
 	virtual void update() = 0;
 	virtual void draw() = 0;
-	//virtual void clear() { textureManager::instance()->erase(id); }
+	//virtual void clear() { TextureManager::instance()->erase(id); }
 	 int getX() { return xpos; }
  	 int getY() { return ypos; }
 protected:

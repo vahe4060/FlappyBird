@@ -1,15 +1,15 @@
-#include "gameStates.h"
-#include "game.h"
+#include "GameStates.h"
+#include "Game.h"
 
-gameOverState::gameOverState()
+GameOverState::GameOverState()
 {
 }
 
-bool gameOverState::onEnter()
+bool GameOverState::onEnter()
 {
-    if (!textureManager::instance()->load("assets/gameover.png", "gameover")) return false;
-    if (!textureManager::instance()->load("assets/numbers.png", "numbers")) return false;
-    if (!textureManager::instance()->load("assets/score.png", "score")) return false;
+    if (!TextureManager::instance()->load("assets/gameover.png", "gameover")) return false;
+    if (!TextureManager::instance()->load("assets/numbers.png", "numbers")) return false;
+    if (!TextureManager::instance()->load("assets/score.png", "score")) return false;
 
 
     retry = new ClickButton(new loaderParams(190,280,46,46,"retry"), "assets/retry.png");
@@ -19,34 +19,34 @@ bool gameOverState::onEnter()
 }
 
 
-bool gameOverState::onExit()
+bool GameOverState::onExit()
 {
-    textureManager::instance()->erase("gameover");
-    textureManager::instance()->erase("numbers");
-    textureManager::instance()->erase("score");
+    TextureManager::instance()->erase("gameover");
+    TextureManager::instance()->erase("numbers");
+    TextureManager::instance()->erase("score");
     retry->~ClickButton();
     delete retry;
     return true;
 }
 
 
-void gameOverState::update()
+void GameOverState::update()
 {
     retry->update();
     if (retry->clicked)
     {
-        game::instance()->reset();
-        game::instance()->getStateMachine()->popState();
-        game::instance()->getStateMachine()->pushState(new PlayState());
+        Game::instance()->reset();
+        Game::instance()->getStateMachine()->popState();
+        Game::instance()->getStateMachine()->pushState(new PlayState());
     }
 }
 
 
-void gameOverState::render()
+void GameOverState::render()
 {
-    textureManager::instance()->draw("gameover", 75, 50, 96, 23, 0, 3);
-    textureManager::instance()->draw("score", 80, 202, 40, 13, 0, 3);
+    TextureManager::instance()->draw("gameover", 75, 50, 96, 23, 0, 3);
+    TextureManager::instance()->draw("score", 80, 202, 40, 13, 0, 3);
 
-    game::instance()->printScore(4,350,200);
+    Game::instance()->printScore(4,350,200);
     retry->draw();
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

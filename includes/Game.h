@@ -1,27 +1,27 @@
 #pragma once
-#include "inputHandler.h"
+#include "InputHandler.h"
 #include <iostream>
-#include "gameStateMachine.h"
+#include "GameStateMachine.h"
 #include "Player.h"
 #include "SDL.h"
 #include "SDL_image.h"
-#include "textureManager.h"
+#include "TextureManager.h"
 
 #define WinHeight 768
 #define WinWidth  432
 
-class game
+class Game
 {
 private:
-	static game* instance_;
-	game();
-	~game();
+	static Game* instance_;
+	Game();
+	~Game();
 
 public:
-	static game* instance();
+	static Game* instance();
 	SDL_Renderer* getRenderer() { return renderer; }
-	gameStateMachine* getStateMachine() { return GameStateMachine; }
-	bool init(int flags = 0);
+	GameStateMachine* getStateMachine() { return gameStateMachine; }
+	bool init(int flags = SDL_WINDOW_SHOWN);
 	void clean();
 	void update();
 	void render();
@@ -32,14 +32,10 @@ public:
 	void reset();
 
 private:
-
-	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
-
-	gameStateMachine* GameStateMachine = nullptr;
-	
-	
-	int score = 0;
+	SDL_Window *window;
+	SDL_Renderer *renderer;
+	GameStateMachine *gameStateMachine;
+	int score;
 public:
 	bool isRunning;
 };

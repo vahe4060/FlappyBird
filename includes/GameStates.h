@@ -5,7 +5,7 @@
 #include <vector>
 #include "ClickButton.h"
 
-class gameState
+class GameState
 {
 public:
 	virtual void update() = 0;
@@ -20,7 +20,7 @@ private:
 
 
 
-class PlayState : public gameState
+class PlayState : public GameState
 {
 public:
 	virtual void update();
@@ -45,7 +45,7 @@ private:
 
 
 
-class menuState : public gameState
+class menuState : public GameState
 {
 public:
 	menuState();
@@ -62,10 +62,10 @@ private:
 
 
 
-class gameOverState : public gameState
+class GameOverState : public GameState
 {
 public:
-	gameOverState();
+	GameOverState();
 
 	void update() override;
 	void render() override;

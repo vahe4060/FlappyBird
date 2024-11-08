@@ -3,14 +3,14 @@
 #include <iostream>
 #include <SDL.h>
 
-class inputHandler
+class InputHandler
 {
 private:
-	static inputHandler* instance_;
-	inputHandler();
-	~inputHandler();
+	static InputHandler* instance_;
+	InputHandler();
+	~InputHandler();
 public:
-	static inputHandler* instance();
+	static InputHandler* instance();
 
 	void update();
 	void clear();

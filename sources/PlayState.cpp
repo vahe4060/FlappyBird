@@ -1,18 +1,18 @@
 #include "ClickButton.h"
-#include "game.h"
-#include "gameStates.h"
-#include "inputHandler.h"
+#include "Game.h"
+#include "GameStates.h"
+#include "InputHandler.h"
 #include "Obstacle.h"
 #include "Player.h"
-#include "textureManager.h"
+#include "TextureManager.h"
 #include <time.h>
 
 void PlayState::update()
 {	
-	if (pauseButton->clicked || inputHandler::instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
+	if (pauseButton->clicked || InputHandler::instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
 		pause = true;
 
-	if (inputHandler::instance()->isMouseButtonDown(0) ) // || inputHandler::instance()->isKeyDown(SDL_SCANCODE_SPACE)) // DOESNT WORK??!
+	if (InputHandler::instance()->isMouseButtonDown(0) ) // || InputHandler::instance()->isKeyDown(SDL_SCANCODE_SPACE)) // DOESNT WORK??!
 		pause = false;
 
 	
@@ -26,12 +26,12 @@ void PlayState::update()
 		Player->update();
 		pauseButton->update();
 
-		game::instance()->printScore(3, 200, 200);
+		Game::instance()->printScore(3, 200, 200);
 
 		if (Player->getX() >= WinHeight)
 		{
-			game::instance()->getStateMachine()->popState();
-			game::instance()->getStateMachine()->pushState(new gameOverState());
+			Game::instance()->getStateMachine()->popState();
+			Game::instance()->getStateMachine()->pushState(new GameOverState());
 		}
 
 		for (auto *i : objects)
@@ -40,12 +40,12 @@ void PlayState::update()
 			{
 				if (Player->getY() < i->getY() - 50 || Player->getY() + 24 > i->getY() + 50)
 				{
-					game::instance()->getStateMachine()->popState();
-					game::instance()->getStateMachine()->pushState(new gameOverState());
+					Game::instance()->getStateMachine()->popState();
+					Game::instance()->getStateMachine()->pushState(new GameOverState());
 					break;
 				}
 			}
-			if (i->getX() == 100) game::instance()->addscore();
+			if (i->getX() == 100) Game::instance()->addscore();
 		}
 
 	}
@@ -60,14 +60,14 @@ void PlayState::render()
 
 	Player->draw();
 	pauseButton->draw();
-	game::instance()->printScore(3, 240, 50);
+	Game::instance()->printScore(3, 240, 50);
 
 
 }
 
 bool PlayState::onEnter()
 {
-	if (!textureManager::instance()->load("assets/numbers.png", "numbers")) return false;
+	if (!TextureManager::instance()->load("assets/numbers.png", "numbers")) return false;
 	
 
 	objects.push_back(new Obstacle(new loaderParams(300, 200, 39, 1300, "obstacle")));
@@ -81,7 +81,7 @@ bool PlayState::onEnter()
 
 bool PlayState::onExit()
 {
-	textureManager::instance()->erase("numbers");
+	TextureManager::instance()->erase("numbers");
 
 	Player->~player();
 	pauseButton->~ClickButton();

@@ -19,39 +19,40 @@ TARGET_EXE := $(BUILD_DIR)/$(TARGET)
 TARGET_DBG_EXE := $(BUILD_DBG_DIR)/$(TARGET)
 
 INCLUDES = $(INCLUDES_DIR)/ClickButton.h \
-           $(INCLUDES_DIR)/game.h \
+           $(INCLUDES_DIR)/Game.h \
            $(INCLUDES_DIR)/GameObject.h \
-           $(INCLUDES_DIR)/gameOverState.h \
-           $(INCLUDES_DIR)/gameStateMachine.h \
-           $(INCLUDES_DIR)/gameStates.h \
-           $(INCLUDES_DIR)/inputHandler.h \
+           $(INCLUDES_DIR)/GameStateMachine.h \
+           $(INCLUDES_DIR)/GameStates.h \
+           $(INCLUDES_DIR)/InputHandler.h \
            $(INCLUDES_DIR)/LoaderParams.h \
            $(INCLUDES_DIR)/Obstacle.h \
            $(INCLUDES_DIR)/Player.h \
-           $(INCLUDES_DIR)/textureManager.h   
+           $(INCLUDES_DIR)/TextureManager.h   
+
 SRC = $(SRC_DIR)/ClickButton.cpp \
       $(SRC_DIR)/flappyBird.cpp \
-      $(SRC_DIR)/game.cpp \
-      $(SRC_DIR)/gameOverState.cpp \
-      $(SRC_DIR)/gameStateMachine.cpp \
-      $(SRC_DIR)/inputHandler.cpp \
+      $(SRC_DIR)/Game.cpp \
+      $(SRC_DIR)/GameOverState.cpp \
+      $(SRC_DIR)/GameStateMachine.cpp \
+      $(SRC_DIR)/InputHandler.cpp \
       $(SRC_DIR)/menuState.cpp \
       $(SRC_DIR)/Obstacle.cpp \
       $(SRC_DIR)/Player.cpp \
-      $(SRC_DIR)/playState.cpp \
-      $(SRC_DIR)/textureManager.cpp
+      $(SRC_DIR)/PlayState.cpp \
+      $(SRC_DIR)/TextureManager.cpp
+      
 OBJ = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 OBJ_DBG = $(SRC:$(SRC_DIR)/%.cpp=$(BUILD_DBG_DIR)/%.o)
 
 
 all: $(TARGET_EXE)
-	@ln -s $(TARGET_EXE) $(TARGET)
+	@ln -sf $(TARGET_EXE) $(TARGET)
 
 $(TARGET_EXE): $(OBJ)
 	$(CXX) $(CXX_FLAGS) -o $@ $^ $(SDL2_LIBS) $(SDL2IMAGE_LIBS)
 
 debug: $(TARGET_DBG_EXE)
-	@ln -s $(TARGET_DBG_EXE) $(TARGET)
+	@ln -sf $(TARGET_DBG_EXE) $(TARGET)
 
 $(TARGET_DBG_EXE): $(OBJ_DBG)
 	$(CXX) $(CXX_FLAGS_DBG) -o $(TARGET_DBG_EXE) $^ $(SDL2_LIBS) $(SDL2IMAGE_LIBS)
@@ -66,6 +67,8 @@ $(BUILD_DBG_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDES)
 
 clean:
 	@rm -rf $(BUILD_DIR) $(BUILD_DBG_DIR) $(TARGET_EXE) $(TARGET_DBG_EXE) $(TARGET)
+
+re: clean all
 
 
 .PHONY: all clean debug

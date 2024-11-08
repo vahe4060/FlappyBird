@@ -3,15 +3,15 @@
 #include "SDL_image.h"
 
 
-class textureManager
+class TextureManager
 {
 private:
-	textureManager();
-	~textureManager();
-	static textureManager* instance_;
+	TextureManager();
+	~TextureManager();
+	static TextureManager* instance_;
 
 public:
-	static textureManager* instance();
+	static TextureManager* instance();
 
 	bool load(const char* path, const char* id);
 	void erase(const char* id);
