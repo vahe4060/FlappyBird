@@ -1,12 +1,12 @@
 #pragma once
-class loaderParams
+class LoaderParams
 {
 private:
     int xpos, ypos;
     int Width, Height;
     const char* ID;
 public:
-    loaderParams(int x, int y, int w, int h, const char* id) :
+    LoaderParams(int x, int y, int w, int h, const char* id) :
         xpos(x),
         ypos(y),
         Width(w),

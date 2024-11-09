@@ -6,6 +6,7 @@ Game::Game()
 	, renderer(nullptr)
 	, gameStateMachine(nullptr)
 	, score(0)
+	, isRunning(false)
 {
 }
 
@@ -41,29 +42,24 @@ bool Game::init(int flags)
 		if (!TextureManager::instance()->load("./assets/numbers.png", "numbers"))
 			return false;
 		gameStateMachine = new GameStateMachine();
-		gameStateMachine->pushState(new menuState());
+		gameStateMachine->pushState(new MenuState());
 		isRunning = true;
 		return true;
 	}
 	return false;
 }
 
-
 void Game::clean()
 {
-	TextureManager::instance()->erase("background");
-	TextureManager::instance()->erase("button");
-	TextureManager::instance()->erase("numbers");
-	
+	TextureManager::instance()->clearAll();
+
 	gameStateMachine->popState();
 	gameStateMachine->popState();
 	delete gameStateMachine;
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-
 }
-
 
 void Game::update()
 {
@@ -79,12 +75,10 @@ void Game::render()
 	SDL_RenderPresent(renderer);
 }
 
-
 void Game::handleEvents()
 {
 
 }
-
 
 void Game::quit()
 {

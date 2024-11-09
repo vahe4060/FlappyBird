@@ -1,17 +1,18 @@
 #include "Player.h"
 #include "Game.h"
 
-player::player(const loaderParams* params) : gameObject(params)
+Player::Player(const LoaderParams* params) : GameObject(params)
 {
-	TextureManager::instance()->load("assets/player.png", id);
+	if (!TextureManager::instance()->load("./assets/player.png", id))
+		std::cout << "Cannot load ./assets/player.png" << std::endl;
 }
 
-player::~player()
+Player::~Player()
 {
-	gameObject::~gameObject();
+	GameObject::~GameObject();
 }
 
-void player::update()
+void Player::update()
 {
 	rotateAngle = 45;
 	ypos+=10;
@@ -25,16 +26,16 @@ void player::update()
 	SDL_Delay(60);
 }
 
-void player::draw()
+void Player::draw()
 {
 	if (currentFrame == 2) currentFrame = 0;
 	else currentFrame++;
 		
-	TextureManager::instance()->draw("player", xpos, ypos, width, height, currentFrame, 2,rotateAngle);
+	TextureManager::instance()->draw("Player", xpos, ypos, width, height, currentFrame, 2,rotateAngle);
 
 }
 
-void player::jump()
+void Player::jump()
 {
 	ypos -= 20;
 	rotateAngle = -45;

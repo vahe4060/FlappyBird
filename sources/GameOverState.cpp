@@ -12,7 +12,7 @@ bool GameOverState::onEnter()
     if (!TextureManager::instance()->load("assets/score.png", "score")) return false;
 
 
-    retry = new ClickButton(new loaderParams(190,280,46,46,"retry"), "assets/retry.png");
+    retry = new ClickButton(new LoaderParams(190,280,46,46,"retry"), "assets/retry.png");
 
 
     return true;

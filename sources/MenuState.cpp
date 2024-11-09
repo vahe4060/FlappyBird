@@ -2,25 +2,21 @@
 #include "InputHandler.h"
 #include "Game.h"
 
-menuState::menuState()
+bool MenuState::onEnter()
 {
-}
-
-bool menuState::onEnter()
-{
-    if (!TextureManager::instance()->load("assets/logo.png", "logo")) return false;
-    if (!TextureManager::instance()->load("assets/button.png", "touch")) return false;
+    if (!TextureManager::instance()->load("./assets/logo.png", "logo")) return false;
+    if (!TextureManager::instance()->load("./assets/button.png", "touch")) return false;
     
-    bird = new player(new loaderParams(180, 250, 17, 12, "player"));
+    bird = new Player(new LoaderParams(180, 250, 17, 12, "player"));
     if (bird == nullptr) return false;
 
     return true;
 }
 
 
-bool menuState::onExit()
+bool MenuState::onExit()
 {
-    bird->~player();
+    bird->~Player();
     delete bird;
 
     TextureManager::instance()->erase("logo");
@@ -29,9 +25,9 @@ bool menuState::onExit()
 }
 
 
-void menuState::update()
+void MenuState::update()
 {
-    //bird->draw();
+    // bird->draw();
     if (InputHandler::instance()->isMouseButtonDown(0))
     {
         Game::instance()->getStateMachine()->popState();
@@ -40,7 +36,7 @@ void menuState::update()
 }
 
 
-void menuState::render()
+void MenuState::render()
 {
     TextureManager::instance()->draw("logo", 69, 100, 98, 23, 0, 3);
     TextureManager::instance()->draw("touch", 138, 300, 52, 35, 0, 3);

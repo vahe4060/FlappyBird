@@ -35,7 +35,7 @@ SRC = $(SRC_DIR)/main.cpp \
       $(SRC_DIR)/GameOverState.cpp \
       $(SRC_DIR)/GameStateMachine.cpp \
       $(SRC_DIR)/InputHandler.cpp \
-      $(SRC_DIR)/menuState.cpp \
+      $(SRC_DIR)/MenuState.cpp \
       $(SRC_DIR)/Obstacle.cpp \
       $(SRC_DIR)/Player.cpp \
       $(SRC_DIR)/PlayState.cpp \

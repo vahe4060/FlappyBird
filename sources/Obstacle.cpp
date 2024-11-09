@@ -2,7 +2,7 @@
 #include "Obstacle.h"
 #include <time.h>
 
-Obstacle::Obstacle(const loaderParams* params) :gameObject(params) 
+Obstacle::Obstacle(const LoaderParams* params) :GameObject(params) 
 {
 	TextureManager::instance()->load("assets/obstacle.png", id);
 
@@ -10,7 +10,7 @@ Obstacle::Obstacle(const loaderParams* params) :gameObject(params)
 
 Obstacle::~Obstacle()
 {
-	gameObject::~gameObject();
+	GameObject::~GameObject();
 }
 
 

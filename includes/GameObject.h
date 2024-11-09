@@ -4,10 +4,10 @@
 #include "SDL_image.h"
 #include "TextureManager.h"
 
-class gameObject
+class GameObject
 {
 public:
-	gameObject(const loaderParams* params) :
+	GameObject(const LoaderParams* params) :
 		xpos(params->getX()),
 		ypos(params->getY()),
 		width(params->width()),
@@ -18,7 +18,7 @@ public:
 		delete params;
 	}
 
-	virtual ~gameObject() 
+	virtual ~GameObject() 
 	{
 		TextureManager::instance()->erase(id);
 	}

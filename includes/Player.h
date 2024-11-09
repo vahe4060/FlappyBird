@@ -1,11 +1,11 @@
 #pragma once
 #include "GameObject.h"
 
-class player:public gameObject
+class Player:public GameObject
 {
 public:
-	player(const loaderParams* params);
-	virtual ~player();
+	Player(const LoaderParams* params);
+	virtual ~Player();
 
 	void update() override;
 	void draw() override;

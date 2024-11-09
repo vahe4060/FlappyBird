@@ -24,7 +24,12 @@ TextureManager* TextureManager::instance()
 	return instance_;
 }
 
-
+void TextureManager::clearAll()
+{
+	erase("background");
+	erase("button");
+	erase("numbers");
+}
 
 bool TextureManager::load(const char* path, const char* id)
 {

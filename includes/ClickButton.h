@@ -1,10 +1,10 @@
 #pragma once
 #include "GameObject.h"
 
-class ClickButton: public gameObject
+class ClickButton: public GameObject
 {
 public:
-	ClickButton(const loaderParams*, const char* );
+	ClickButton(const LoaderParams*, const char* );
 	virtual ~ClickButton();
 
 	void update() override;

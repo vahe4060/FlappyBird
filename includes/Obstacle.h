@@ -1,10 +1,10 @@
 #pragma once
 #include "GameObject.h"
 
-class Obstacle :public gameObject
+class Obstacle :public GameObject
 {
 public:
-	Obstacle(const loaderParams* params);
+	Obstacle(const LoaderParams* params);
 	~Obstacle();
 	void update() override;
 	void draw() override;

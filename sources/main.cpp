@@ -3,7 +3,7 @@
 
 #include "Game.h"
 
-int main(int argc,char** argv)
+int main(int argc,  char **argv)
 {
     const int FPS = 24;
     int frameStart, frameEnd, FrameDuration;

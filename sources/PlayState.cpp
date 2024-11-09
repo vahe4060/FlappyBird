@@ -7,6 +7,7 @@
 #include "TextureManager.h"
 #include <time.h>
 
+
 void PlayState::update()
 {	
 	if (pauseButton->clicked || InputHandler::instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
@@ -15,20 +16,18 @@ void PlayState::update()
 	if (InputHandler::instance()->isMouseButtonDown(0) ) // || InputHandler::instance()->isKeyDown(SDL_SCANCODE_SPACE)) // DOESNT WORK??!
 		pause = false;
 
-	
-
 	if (!pause)
 	{
 		for (auto *i : objects)
 		{
 			i->update();
 		}
-		Player->update();
+		player->update();
 		pauseButton->update();
 
 		Game::instance()->printScore(3, 200, 200);
 
-		if (Player->getX() >= WinHeight)
+		if (player->getX() >= WinHeight)
 		{
 			Game::instance()->getStateMachine()->popState();
 			Game::instance()->getStateMachine()->pushState(new GameOverState());
@@ -36,9 +35,9 @@ void PlayState::update()
 
 		for (auto *i : objects)
 		{
-			if (Player->getX() + 34 > i->getX() && Player->getX() < i->getX() + 39)
+			if (player->getX() + 34 > i->getX() && player->getX() < i->getX() + 39)
 			{
-				if (Player->getY() < i->getY() - 50 || Player->getY() + 24 > i->getY() + 50)
+				if (player->getY() < i->getY() - 50 || player->getY() + 24 > i->getY() + 50)
 				{
 					Game::instance()->getStateMachine()->popState();
 					Game::instance()->getStateMachine()->pushState(new GameOverState());
@@ -58,7 +57,7 @@ void PlayState::render()
 		objects[i]->draw();
 	}
 
-	Player->draw();
+	player->draw();
 	pauseButton->draw();
 	Game::instance()->printScore(3, 240, 50);
 
@@ -70,11 +69,11 @@ bool PlayState::onEnter()
 	if (!TextureManager::instance()->load("assets/numbers.png", "numbers")) return false;
 	
 
-	objects.push_back(new Obstacle(new loaderParams(300, 200, 39, 1300, "obstacle")));
-	objects.push_back(new Obstacle(new loaderParams(600, 300, 39, 1300, "obstacle")));
+	objects.push_back(new Obstacle(new LoaderParams(300, 200, 39, 1300, "obstacle")));
+	objects.push_back(new Obstacle(new LoaderParams(600, 300, 39, 1300, "obstacle")));
 
-	pauseButton = new ClickButton(new loaderParams(380, 10, 35, 35, "pause"), "assets/pause.png");
-	Player = new player(new loaderParams(100, 100, 17, 12, "player"));
+	pauseButton = new ClickButton(new LoaderParams(380, 10, 35, 35, "pause"), "assets/pause.png");
+	player = new Player(new LoaderParams(100, 100, 17, 12, "Player"));
 
 	return true;
 }
@@ -83,7 +82,7 @@ bool PlayState::onExit()
 {
 	TextureManager::instance()->erase("numbers");
 
-	Player->~player();
+	player->~Player();
 	pauseButton->~ClickButton();
 	for (int i = 0; i < objects.size(); i++)
 	{
@@ -91,7 +90,7 @@ bool PlayState::onExit()
 		delete objects[i];
 	}
 
-	delete Player;
+	delete player;
 	delete pauseButton;
 	objects.clear();
 

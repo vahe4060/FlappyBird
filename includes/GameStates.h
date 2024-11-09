@@ -13,11 +13,9 @@ public:
 	virtual bool onEnter() = 0;
 	virtual bool onExit() = 0;
 
-
 private:
 
 };
-
 
 
 class PlayState : public GameState
@@ -32,7 +30,7 @@ public:
 	void pauseGame();
 
 private:
-	player* Player = nullptr;
+	Player* player = nullptr;
 	std::vector<Obstacle*> objects;
 
 	ClickButton* pauseButton = nullptr;
@@ -43,23 +41,17 @@ private:
 };
 
 
-
-
-class menuState : public GameState
+class MenuState : public GameState
 {
 public:
-	menuState();
-
 	void update() override;
 	void render() override;
 	bool onEnter() override;
 	bool onExit() override;
 
 private:
-	player* bird = nullptr;// = new player(new loaderParams(180, 250, 17, 12, "player"));
+	Player* bird = nullptr;// = new Player(new LoaderParams(180, 250, 17, 12, "Player"));
 };
-
-
 
 
 class GameOverState : public GameState
@@ -71,7 +63,6 @@ public:
 	void render() override;
 	bool onEnter() override;
 	bool onExit() override;
-
 
 private:
 

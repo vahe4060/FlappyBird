@@ -1,7 +1,7 @@
 #include "ClickButton.h"
 #include "InputHandler.h"
 
-ClickButton::ClickButton(const loaderParams* params,const char* path) : gameObject(params) 
+ClickButton::ClickButton(const LoaderParams* params,const char* path) : GameObject(params) 
 {
 	TextureManager::instance()->load(path, id);
 }
@@ -27,5 +27,5 @@ void ClickButton::draw()
 
  ClickButton::~ClickButton()
 {
-	gameObject::~gameObject();
+	GameObject::~GameObject();
 }
