@@ -28,11 +28,11 @@ void Player::update()
 
 void Player::draw()
 {
-	if (currentFrame == 2) currentFrame = 0;
-	else currentFrame++;
-		
-	TextureManager::instance()->draw("Player", xpos, ypos, width, height, currentFrame, 2,rotateAngle);
-
+	if (currentFrame == 2) 
+		currentFrame = 0;
+	else 
+		currentFrame++;
+	TextureManager::instance()->draw(id, xpos, ypos, width, height, currentFrame, 2, rotateAngle);
 }
 
 void Player::jump()

@@ -8,7 +8,6 @@ GameStateMachine::~GameStateMachine()
 	}
 }
 
-
 void GameStateMachine::popState()
 {
 	if (!states.empty())

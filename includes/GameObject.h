@@ -15,7 +15,6 @@ public:
 		id(params->id()),
 		currentFrame(0)
 	{
-		delete params;
 	}
 
 	virtual ~GameObject() 

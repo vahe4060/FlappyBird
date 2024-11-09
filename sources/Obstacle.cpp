@@ -4,8 +4,8 @@
 
 Obstacle::Obstacle(const LoaderParams* params) :GameObject(params) 
 {
-	TextureManager::instance()->load("assets/obstacle.png", id);
-
+	if (!TextureManager::instance()->load("./assets/obstacle.png", id))
+		std::cout << "Cannot load ./assets/obstacle.png" << std::endl;
 }
 
 Obstacle::~Obstacle()
@@ -27,7 +27,7 @@ void Obstacle::update()
 void Obstacle::draw()
 {
 
-	TextureManager::instance()->draw("obstacle", xpos, ypos - 600, width, height);
+	TextureManager::instance()->draw(id, xpos, ypos - 600, width, height);
 
 }
 

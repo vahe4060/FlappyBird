@@ -24,7 +24,7 @@ bool GameOverState::onExit()
     TextureManager::instance()->erase("gameover");
     TextureManager::instance()->erase("numbers");
     TextureManager::instance()->erase("score");
-    retry->~ClickButton();
+    // retry->~ClickButton();
     delete retry;
     return true;
 }

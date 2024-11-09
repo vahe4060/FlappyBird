@@ -25,7 +25,6 @@ private:
 	Uint8* keystate = nullptr;
 	std::pair<int, int> MousePosition;
 
-
 	void onKeyDown(SDL_Event&);
 	void onKeyUp(SDL_Event&);
 	void onMouseButtonDown(SDL_Event&);

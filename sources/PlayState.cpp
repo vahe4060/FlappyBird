@@ -57,23 +57,21 @@ void PlayState::render()
 		objects[i]->draw();
 	}
 
-	player->draw();
 	pauseButton->draw();
+	player->draw();
 	Game::instance()->printScore(3, 240, 50);
-
-
 }
 
 bool PlayState::onEnter()
 {
-	if (!TextureManager::instance()->load("assets/numbers.png", "numbers")) return false;
+	if (!TextureManager::instance()->load("./assets/numbers.png", "numbers")) return false;
 	
 
 	objects.push_back(new Obstacle(new LoaderParams(300, 200, 39, 1300, "obstacle")));
 	objects.push_back(new Obstacle(new LoaderParams(600, 300, 39, 1300, "obstacle")));
 
-	pauseButton = new ClickButton(new LoaderParams(380, 10, 35, 35, "pause"), "assets/pause.png");
-	player = new Player(new LoaderParams(100, 100, 17, 12, "Player"));
+	pauseButton = new ClickButton(new LoaderParams(380, 10, 35, 35, "pause"), "./assets/pause.png");
+	player = new Player(new LoaderParams(100, 100, 17, 12, "player"));
 
 	return true;
 }
@@ -82,11 +80,11 @@ bool PlayState::onExit()
 {
 	TextureManager::instance()->erase("numbers");
 
-	player->~Player();
-	pauseButton->~ClickButton();
+	// player->~Player();
+	// pauseButton->~ClickButton();
 	for (int i = 0; i < objects.size(); i++)
 	{
-		objects[i]->~Obstacle();
+		// objects[i]->~Obstacle();
 		delete objects[i];
 	}
 

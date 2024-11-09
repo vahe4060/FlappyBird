@@ -16,7 +16,7 @@ bool MenuState::onEnter()
 
 bool MenuState::onExit()
 {
-    bird->~Player();
+    // bird->~Player();
     delete bird;
 
     TextureManager::instance()->erase("logo");
