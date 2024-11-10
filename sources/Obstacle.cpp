@@ -7,16 +7,18 @@ Obstacle::Obstacle(int x, int y, int w, int h, const char* id)
 {
 	if (!TextureManager::instance()->load("./assets/obstacle.png", id_))
 		std::cout << "Cannot load ./assets/obstacle.png" << std::endl;
+	std::cout << "Constructed " << id_ << std::endl;
 }
 
 Obstacle::~Obstacle()
 {
+	std::cout << "Destructed " << id_ << std::endl;
 	GameObject::~GameObject();
 }
 
 void Obstacle::update()
 {
-	x_-=5;
+	x_ -= 5;
 	if (x_ < -150) { 
 		x_ = 480;
 		genNext();

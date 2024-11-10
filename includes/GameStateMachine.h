@@ -8,10 +8,10 @@ class GameStateMachine
 public:
 	~GameStateMachine();
 	void popState();
-	void pushState(GameState*);
+	void pushState(GameState *);
 	void update();
 	void render();
 private:
-	std::vector<GameState*> states_;
+	std::vector<GameState *> states_;
 };
 

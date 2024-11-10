@@ -5,44 +5,41 @@
 #include <vector>
 #include "ClickButton.h"
 
+
 class GameState
 {
 public:
+	GameState() {};
+	virtual ~GameState() {};
 	virtual void update() = 0;
 	virtual void render() = 0;
-	virtual bool onEnter() = 0;
-	virtual bool onExit() = 0;
 private:
 };
-
 
 class PlayState : public GameState
 {
 public:
+	PlayState();
+	~PlayState();
 	virtual void update();
 	virtual void render();
-	virtual bool onExit();
-	virtual bool onEnter();
 	void pauseGame();
 private:
-	Player* bird_ = nullptr;
-	std::vector<Obstacle*> objects_;
-	ClickButton* pauseButton_ = nullptr;
-	ClickButton* retryButton_ = nullptr;
-	ClickButton* menuButton_ = nullptr;
+	Player bird_;
+	std::vector<Obstacle> objects_;
+	ClickButton pauseButton_;
 	bool pause_ = false;
 };
-
 
 class MenuState : public GameState
 {
 public:
+	MenuState();
+	~MenuState();
 	void update() override;
 	void render() override;
-	bool onEnter() override;
-	bool onExit() override;
 private:
-	Player* bird_;
+	Player bird_;
 };
 
 
@@ -50,11 +47,10 @@ class GameOverState : public GameState
 {
 public:
 	GameOverState();
+	~GameOverState();
 	void update() override;
 	void render() override;
-	bool onEnter() override;
-	bool onExit() override;
 private:
-	ClickButton* retryButton_;
+	ClickButton retryButton_;
 };
 

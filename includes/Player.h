@@ -4,7 +4,7 @@
 class Player: public GameObject
 {
 public:
-	Player(int x, int y, int w, int h, const char* id);
+	Player(int x, int y, int w, int h, const char *id);
 	~Player();
 	void update() override;
 	void draw() override;

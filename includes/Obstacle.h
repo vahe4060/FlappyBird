@@ -4,7 +4,7 @@
 class Obstacle :public GameObject
 {
 public:
-	Obstacle(int x, int y, int w, int h, const char* id);
+	Obstacle(int x, int y, int w, int h, const char *id);
 	~Obstacle();
 	void update() override;
 	void draw() override;

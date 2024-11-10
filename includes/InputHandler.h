@@ -6,12 +6,12 @@
 class InputHandler
 {
 private:
-	static InputHandler* instance_;
+	static InputHandler *instance_;
 	InputHandler();
 	~InputHandler();
 
 public:
-	static InputHandler* instance();
+	static InputHandler *instance();
 	void update();
 	void clear();
 	bool isKeyDown(SDL_Scancode key);
@@ -20,7 +20,7 @@ public:
 
 private:
 	bool mouseButtons_[3];
-	Uint8* keyState_ = nullptr;
+	Uint8 *keyState_;
 	std::pair<int, int> mousePosition_;
 	void onKeyDown(SDL_Event&);
 	void onKeyUp(SDL_Event&);

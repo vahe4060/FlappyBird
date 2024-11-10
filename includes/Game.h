@@ -20,9 +20,9 @@ private:
 	~Game();
 
 public:
-	static Game* instance();
-	SDL_Renderer* getRenderer() { return renderer_; }
-	GameStateMachine* getStateMachine() { return gameStateMachine_; }
+	static Game *instance();
+	SDL_Renderer *getRenderer() { return renderer_; }
+	GameStateMachine *getStateMachine() { return &gameStateMachine_; }
 	bool isRunning() { return isRunning_; }
 	bool init(int flags = SDL_WINDOW_SHOWN);
 	void clean();
@@ -36,8 +36,8 @@ public:
 private:
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;
-	GameStateMachine *gameStateMachine_;
 	int score_;
 	bool isRunning_;
+	GameStateMachine gameStateMachine_;
 };
 

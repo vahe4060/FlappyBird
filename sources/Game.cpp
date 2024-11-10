@@ -4,7 +4,7 @@
 Game::Game() 
 	: window_(nullptr)
 	, renderer_(nullptr)
-	, gameStateMachine_(nullptr)
+	, gameStateMachine_(GameStateMachine())
 	, score_(0)
 	, isRunning_(false)
 {
@@ -35,14 +35,14 @@ bool Game::init(int flags)
 		renderer_ = SDL_CreateRenderer(window_, -1, 0);
 		if (!renderer_)
 			return false;
+		TextureManager::instance()->setRenderer(renderer_);
 		if (!TextureManager::instance()->load("./assets/background.png", "background"))
 			return false;
 		if (!TextureManager::instance()->load("./assets/button.png", "button"))
 			return false;
 		if (!TextureManager::instance()->load("./assets/numbers.png", "numbers"))
 			return false;
-		gameStateMachine_ = new GameStateMachine();
-		gameStateMachine_->pushState(new MenuState());
+		gameStateMachine_.pushState(new MenuState());
 		isRunning_ = true;
 		return true;
 	}
@@ -51,12 +51,9 @@ bool Game::init(int flags)
 
 void Game::clean()
 {
-	TextureManager::instance()->clearAll();
-
-	gameStateMachine_->popState();
-	gameStateMachine_->popState();
-	delete gameStateMachine_;
-
+	TextureManager::instance()->eraseAll();
+	gameStateMachine_.popState();
+	gameStateMachine_.popState();
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 }
@@ -64,14 +61,13 @@ void Game::clean()
 void Game::update()
 {
 	InputHandler::instance()->update();
-	gameStateMachine_->update();
+	gameStateMachine_.update();
 }
 
 void Game::render()
 {
 	TextureManager::instance()->draw("background", 0, 0, WINWIDTH, WINHEIGHT, 0);
-	gameStateMachine_->render();
-
+	gameStateMachine_.render();
 	SDL_RenderPresent(renderer_);
 }
 

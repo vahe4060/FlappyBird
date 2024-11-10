@@ -1,29 +1,21 @@
 #include "GameStates.h"
 #include "InputHandler.h"
 #include "Game.h"
+#include <cassert>
 
-bool MenuState::onEnter()
+MenuState::MenuState()
+    : GameState()
+    , bird_(Player(180, 250, 17, 12, "player"))
 {
-    if (!TextureManager::instance()->load("./assets/logo.png", "logo"))
-        return false;
-    if (!TextureManager::instance()->load("./assets/button.png", "touch"))
-        return false;
-
-    bird_ = new Player(180, 250, 17, 12, "player");
-    if (bird_ == nullptr)
-        return false;
-    return true;
+    assert(TextureManager::instance()->load("./assets/logo.png", "logo"));
+    assert(TextureManager::instance()->load("./assets/button.png", "touch"));
 }
 
-
-bool MenuState::onExit()
+MenuState::~MenuState()
 {
-    delete bird_;
     TextureManager::instance()->erase("logo");
     TextureManager::instance()->erase("touch");
-    return true;
 }
-
 
 void MenuState::update()
 {
@@ -34,11 +26,10 @@ void MenuState::update()
     }
 }
 
-
 void MenuState::render()
 {
     TextureManager::instance()->draw("logo", 69, 100, 98, 23, 0, 3);
     TextureManager::instance()->draw("touch", 138, 300, 52, 35, 0, 3);
-    bird_->draw();
+    bird_.draw();
     SDL_Delay(50);
 }

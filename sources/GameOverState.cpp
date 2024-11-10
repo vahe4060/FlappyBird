@@ -1,35 +1,27 @@
 #include "GameStates.h"
 #include "Game.h"
+#include <cassert>
 
 GameOverState::GameOverState()
+    : GameState()
+    , retryButton_(190, 280, 46, 46, "retry", "./assets/retry.png")
 {
+    assert(TextureManager::instance()->load("./assets/gameover.png", "gameover"));
+    assert(TextureManager::instance()->load("./assets/numbers.png", "numbers"));
+    assert(TextureManager::instance()->load("./assets/score.png", "score"));
 }
 
-bool GameOverState::onEnter()
-{
-    if (!TextureManager::instance()->load("./assets/gameover.png", "gameover"))
-        return false;
-    if (!TextureManager::instance()->load("./assets/numbers.png", "numbers"))
-        return false;
-    if (!TextureManager::instance()->load("./assets/score.png", "score"))
-        return false;
-    retryButton_ = new ClickButton(190, 280, 46, 46, "retry", "./assets/retry.png");
-    return true;
-}
-
-bool GameOverState::onExit()
+GameOverState::~GameOverState()
 {
     TextureManager::instance()->erase("gameover");
     TextureManager::instance()->erase("numbers");
     TextureManager::instance()->erase("score");
-    delete retryButton_;
-    return true;
 }
 
 void GameOverState::update()
 {
-    retryButton_->update();
-    if (retryButton_->clicked())
+    retryButton_.update();
+    if (retryButton_.clicked())
     {
         Game::instance()->resetScore();
         Game::instance()->getStateMachine()->popState();
@@ -42,5 +34,5 @@ void GameOverState::render()
     TextureManager::instance()->draw("gameover", 75, 50, 96, 23, 0, 3);
     TextureManager::instance()->draw("score", 80, 202, 40, 13, 0, 3);
     Game::instance()->printScore(4,350,200);
-    retryButton_->draw();
+    retryButton_.draw();
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    

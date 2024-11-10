@@ -5,7 +5,7 @@ ClickButton::ClickButton(int x, int y, int w, int h, const char* id, const char*
 			: GameObject(x, y, w, h, id)
 {
 	clicked_ = false;
-	TextureManager::instance()->load(path, id_);
+	TextureManager::instance()->load(path, id);
 }
 
 void ClickButton::update()
