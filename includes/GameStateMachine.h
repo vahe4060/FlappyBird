@@ -12,6 +12,6 @@ public:
 	void update();
 	void render();
 private:
-	std::vector<GameState*> states;
+	std::vector<GameState*> states_;
 };
 

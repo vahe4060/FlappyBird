@@ -4,21 +4,21 @@
 
 bool MenuState::onEnter()
 {
-    if (!TextureManager::instance()->load("./assets/logo.png", "logo")) return false;
-    if (!TextureManager::instance()->load("./assets/button.png", "touch")) return false;
-    
-    bird = new Player(new LoaderParams(180, 250, 17, 12, "player"));
-    if (bird == nullptr) return false;
+    if (!TextureManager::instance()->load("./assets/logo.png", "logo"))
+        return false;
+    if (!TextureManager::instance()->load("./assets/button.png", "touch"))
+        return false;
 
+    bird_ = new Player(180, 250, 17, 12, "player");
+    if (bird_ == nullptr)
+        return false;
     return true;
 }
 
 
 bool MenuState::onExit()
 {
-    // bird->~Player();
-    delete bird;
-
+    delete bird_;
     TextureManager::instance()->erase("logo");
     TextureManager::instance()->erase("touch");
     return true;
@@ -27,7 +27,6 @@ bool MenuState::onExit()
 
 void MenuState::update()
 {
-    // bird->draw();
     if (InputHandler::instance()->isMouseButtonDown(0))
     {
         Game::instance()->getStateMachine()->popState();
@@ -40,6 +39,6 @@ void MenuState::render()
 {
     TextureManager::instance()->draw("logo", 69, 100, 98, 23, 0, 3);
     TextureManager::instance()->draw("touch", 138, 300, 52, 35, 0, 3);
-    bird->draw();
+    bird_->draw();
     SDL_Delay(50);
 }

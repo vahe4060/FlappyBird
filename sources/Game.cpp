@@ -2,11 +2,11 @@
 #include <cassert>
 
 Game::Game() 
-	: window(nullptr)
-	, renderer(nullptr)
-	, gameStateMachine(nullptr)
-	, score(0)
-	, isRunning(false)
+	: window_(nullptr)
+	, renderer_(nullptr)
+	, gameStateMachine_(nullptr)
+	, score_(0)
+	, isRunning_(false)
 {
 }
 
@@ -28,12 +28,12 @@ bool Game::init(int flags)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-		window = SDL_CreateWindow("Flappy Bird", SDL_WINDOWPOS_CENTERED, 
-								  SDL_WINDOWPOS_CENTERED, WinWidth, WinHeight, flags);
-		if (!window)
+		window_ = SDL_CreateWindow("Flappy Bird", SDL_WINDOWPOS_CENTERED, 
+				  				   SDL_WINDOWPOS_CENTERED, WINWIDTH, WINHEIGHT, flags);
+		if (!window_)
 			return false;
-		renderer = SDL_CreateRenderer(window, -1, 0);
-		if (!renderer)
+		renderer_ = SDL_CreateRenderer(window_, -1, 0);
+		if (!renderer_)
 			return false;
 		if (!TextureManager::instance()->load("./assets/background.png", "background"))
 			return false;
@@ -41,9 +41,9 @@ bool Game::init(int flags)
 			return false;
 		if (!TextureManager::instance()->load("./assets/numbers.png", "numbers"))
 			return false;
-		gameStateMachine = new GameStateMachine();
-		gameStateMachine->pushState(new MenuState());
-		isRunning = true;
+		gameStateMachine_ = new GameStateMachine();
+		gameStateMachine_->pushState(new MenuState());
+		isRunning_ = true;
 		return true;
 	}
 	return false;
@@ -53,64 +53,61 @@ void Game::clean()
 {
 	TextureManager::instance()->clearAll();
 
-	gameStateMachine->popState();
-	gameStateMachine->popState();
-	delete gameStateMachine;
+	gameStateMachine_->popState();
+	gameStateMachine_->popState();
+	delete gameStateMachine_;
 
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(renderer_);
+	SDL_DestroyWindow(window_);
 }
 
 void Game::update()
 {
 	InputHandler::instance()->update();
-	gameStateMachine->update();
+	gameStateMachine_->update();
 }
 
 void Game::render()
 {
-	TextureManager::instance()->draw("background", 0, 0, WinWidth, WinHeight, 0);
-	gameStateMachine->render();
+	TextureManager::instance()->draw("background", 0, 0, WINWIDTH, WINHEIGHT, 0);
+	gameStateMachine_->render();
 
-	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(renderer_);
 }
 
 void Game::handleEvents()
 {
-
 }
 
 void Game::quit()
 {
-	isRunning = false;
+	isRunning_ = false;
 }
 
-void Game::addscore()
+void Game::addScore()
 {
-	score++;
+	score_++;
 }
 
-void Game::reset()
+void Game::resetScore()
 {
-	score = 0;
+	score_ = 0;
 }
 
 void Game::printScore(int zoom, int x, int y)
 {
-	int myscore = score;
+	int myscore = score_;
 	int i = 1;
 	while (myscore /= 10)
-	{
 		i++;
-	}
-	myscore = score;
+	myscore = score_;
 
 	for (int j = i; j > 0; j--)
 	{
 		int digit = myscore / pow(10, j - 1);
 
-		TextureManager::instance()->draw("numbers", x - zoom * 10 * j, y, 8, 10, digit, zoom);
+		TextureManager::instance()->draw("numbers", x - zoom * 10 * j, y, 
+										 FONTWIDTH, FONTHEIGHT, digit, zoom);
 		myscore -= digit * pow(10, j - 1);
 	}
-
 }

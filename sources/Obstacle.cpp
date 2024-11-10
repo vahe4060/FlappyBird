@@ -2,9 +2,10 @@
 #include "Obstacle.h"
 #include <time.h>
 
-Obstacle::Obstacle(const LoaderParams* params) :GameObject(params) 
+Obstacle::Obstacle(int x, int y, int w, int h, const char* id)
+	: GameObject(x, y, w, h, id) 
 {
-	if (!TextureManager::instance()->load("./assets/obstacle.png", id))
+	if (!TextureManager::instance()->load("./assets/obstacle.png", id_))
 		std::cout << "Cannot load ./assets/obstacle.png" << std::endl;
 }
 
@@ -13,28 +14,22 @@ Obstacle::~Obstacle()
 	GameObject::~GameObject();
 }
 
-
 void Obstacle::update()
 {
-	xpos-=5;
-	if (xpos < -150) { 
-		xpos = 480;
-	
+	x_-=5;
+	if (x_ < -150) { 
+		x_ = 480;
 		genNext();
 	} 
 }
 
 void Obstacle::draw()
 {
-
-	TextureManager::instance()->draw(id, xpos, ypos - 600, width, height);
-
+	TextureManager::instance()->draw(id_, x_, y_ - 600, width_, height_);
 }
 
 void Obstacle::genNext()
 {
 	std::srand(time(0));
-
-	ypos = (rand() % 6) * 100 + 100;
+	y_ = (rand() % 6) * 100 + 100;
 }
-

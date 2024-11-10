@@ -5,7 +5,7 @@
 
 int main(int argc,  char **argv)
 {
-    const int FPS = 24;
+    const int FPS = 30;
     int frameStart, frameEnd, FrameDuration;
 
     if (!Game::instance()->init()) {
@@ -13,7 +13,7 @@ int main(int argc,  char **argv)
         return 1;
     }
 
-    while (Game::instance()->isRunning)
+    while (Game::instance()->isRunning())
     {
         frameStart = SDL_GetTicks();
 

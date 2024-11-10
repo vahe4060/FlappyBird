@@ -2,7 +2,7 @@
 
 GameStateMachine::~GameStateMachine()
 {
-	while (!states.empty())
+	while (!states_.empty())
 	{
 		popState();
 	}
@@ -10,30 +10,30 @@ GameStateMachine::~GameStateMachine()
 
 void GameStateMachine::popState()
 {
-	if (!states.empty())
+	if (!states_.empty())
 	{
-		if (states.back()->onExit())
+		if (states_.back()->onExit())
 		{
-			delete states.back();
-			states.pop_back();
+			delete states_.back();
+			states_.pop_back();
 		}
 	}
 }
 
 void GameStateMachine::pushState(GameState* newstate)
 {
-	states.push_back(newstate);
-	states.back()->onEnter();
+	states_.push_back(newstate);
+	states_.back()->onEnter();
 }
 
 void GameStateMachine::update()
 {
-	if (!states.empty())
-		states.back()->update();
+	if (!states_.empty())
+		states_.back()->update();
 }
 
 void GameStateMachine::render()
 {
-	if (!states.empty())
-		states.back()->render();
+	if (!states_.empty())
+		states_.back()->render();
 }

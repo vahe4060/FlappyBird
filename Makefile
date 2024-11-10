@@ -24,7 +24,6 @@ INCLUDES = $(INCLUDES_DIR)/ClickButton.h \
            $(INCLUDES_DIR)/GameStateMachine.h \
            $(INCLUDES_DIR)/GameStates.h \
            $(INCLUDES_DIR)/InputHandler.h \
-           $(INCLUDES_DIR)/LoaderParams.h \
            $(INCLUDES_DIR)/Obstacle.h \
            $(INCLUDES_DIR)/Player.h \
            $(INCLUDES_DIR)/TextureManager.h   

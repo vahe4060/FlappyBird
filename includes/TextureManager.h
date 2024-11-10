@@ -19,6 +19,6 @@ public:
 			  int frame = 0, int zoom = 1,int rotateAngle = 0);
 
 private:
-	std::map<const char*, SDL_Texture*> textureMap;
+	std::map<const char*, SDL_Texture*> textureMap_;
 };
 

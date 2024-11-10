@@ -1,9 +1,10 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player(const LoaderParams* params) : GameObject(params)
+Player::Player(int x, int y, int w, int h, const char* id) 
+	: GameObject(x, y, w, h, id)
 {
-	if (!TextureManager::instance()->load("./assets/player.png", id))
+	if (!TextureManager::instance()->load("./assets/player.png", id_))
 		std::cout << "Cannot load ./assets/player.png" << std::endl;
 }
 
@@ -14,30 +15,30 @@ Player::~Player()
 
 void Player::update()
 {
-	rotateAngle = 45;
-	ypos+=10;
-	if (InputHandler::instance()->isKeyDown(SDL_SCANCODE_SPACE) || InputHandler::instance()->isMouseButtonDown(0))
+	rotateAngle_ = 45;
+	y_ += 10;
+	if (InputHandler::instance()->isKeyDown(SDL_SCANCODE_SPACE) 
+	    || InputHandler::instance()->isMouseButtonDown(0))
 		jump();
 
-	if (ypos >= WinHeight) {
+	if (y_ >= WINHEIGHT)
 		std::cout << "Game Over\n";
-	
-	}
 	SDL_Delay(60);
 }
 
 void Player::draw()
 {
-	if (currentFrame == 2) 
-		currentFrame = 0;
+	if (currentFrame_ == 2) 
+		currentFrame_ = 0;
 	else 
-		currentFrame++;
-	TextureManager::instance()->draw(id, xpos, ypos, width, height, currentFrame, 2, rotateAngle);
+		currentFrame_++;
+	TextureManager::instance()->draw(id_, x_, y_, width_, height_,
+									 currentFrame_, 2, rotateAngle_);
 }
 
 void Player::jump()
 {
-	ypos -= 20;
-	rotateAngle = -45;
+	y_ -= 20;
+	rotateAngle_ = -45;
 }
 

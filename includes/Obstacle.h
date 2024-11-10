@@ -4,14 +4,12 @@
 class Obstacle :public GameObject
 {
 public:
-	Obstacle(const LoaderParams* params);
+	Obstacle(int x, int y, int w, int h, const char* id);
 	~Obstacle();
 	void update() override;
 	void draw() override;
-	
-	int getX() { return xpos; }
-	int getY() { return (ypos + 50); }
+	int x() override { return x_; }
+	int y() override { return (y_ + 50); }
 private:
 	void genNext();
-
 };

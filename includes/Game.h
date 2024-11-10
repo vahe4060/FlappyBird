@@ -7,8 +7,10 @@
 #include "SDL_image.h"
 #include "TextureManager.h"
 
-#define WinHeight 768
-#define WinWidth  432
+#define WINHEIGHT 768
+#define WINWIDTH 432
+#define FONTWIDTH 8
+#define FONTHEIGHT 10
 
 class Game
 {
@@ -19,24 +21,23 @@ private:
 
 public:
 	static Game* instance();
-	SDL_Renderer* getRenderer() { return renderer; }
-	GameStateMachine* getStateMachine() { return gameStateMachine; }
+	SDL_Renderer* getRenderer() { return renderer_; }
+	GameStateMachine* getStateMachine() { return gameStateMachine_; }
+	bool isRunning() { return isRunning_; }
 	bool init(int flags = SDL_WINDOW_SHOWN);
 	void clean();
 	void update();
 	void render();
 	void handleEvents();
 	void quit();
-	void addscore();
+	void addScore();
 	void printScore(int size, int x, int y);
-	void reset();
-
+	void resetScore();
 private:
-	SDL_Window *window;
-	SDL_Renderer *renderer;
-	GameStateMachine *gameStateMachine;
-	int score;
-public:
-	bool isRunning;
+	SDL_Window *window_;
+	SDL_Renderer *renderer_;
+	GameStateMachine *gameStateMachine_;
+	int score_;
+	bool isRunning_;
 };
 

@@ -4,13 +4,13 @@
 class ClickButton: public GameObject
 {
 public:
-	ClickButton(const LoaderParams*, const char* );
+	ClickButton(int x, int y, int w, int h, const char* id, const char* path);
 	virtual ~ClickButton();
 
 	void update() override;
 	void draw() override;
-	//void clear() override;
-	
-	bool clicked = false;
+	bool clicked() { return clicked_; }
+private:
+	bool clicked_;
 };
 

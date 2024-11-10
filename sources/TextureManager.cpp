@@ -33,26 +33,27 @@ void TextureManager::clearAll()
 
 bool TextureManager::load(const char* path, const char* id)
 {
-	SDL_Surface* tempsurf = nullptr;
-	tempsurf = IMG_Load(path);
-	if (!tempsurf) return false;
+	SDL_Surface* tempSurf = nullptr;
+	tempSurf = IMG_Load(path);
+	if (!tempSurf) return false;
 
 	SDL_Texture* tempTexture = nullptr;
-	tempTexture = SDL_CreateTextureFromSurface(Game::instance()->getRenderer(), tempsurf);
+	tempTexture = SDL_CreateTextureFromSurface(Game::instance()->getRenderer(), tempSurf);
 	if (!tempTexture) return false;
 
-	textureMap[id] = tempTexture;
-	SDL_FreeSurface(tempsurf);
+	textureMap_[id] = tempTexture;
+	SDL_FreeSurface(tempSurf);
 	return true;
 }
 
 void TextureManager::erase(const char* id)
 {
-	textureMap.erase(id);
+	textureMap_.erase(id);
 }
 
 
-void TextureManager::draw(const char* id, int xpos, int ypos, int width, int height, int frame, int zoom,int rotateAngle)
+void TextureManager::draw(const char* id, int xpos, int ypos, int width, 
+						  int height, int frame, int zoom,int rotateAngle)
 {
 	SDL_Rect srcRect, destRect;
 
@@ -68,5 +69,6 @@ void TextureManager::draw(const char* id, int xpos, int ypos, int width, int hei
 	srcRect.x = width * frame;
 
 	
-	SDL_RenderCopyEx(Game::instance()->getRenderer(), textureMap[id], &srcRect, &destRect, rotateAngle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(Game::instance()->getRenderer(), textureMap_[id], &srcRect,
+					 &destRect, rotateAngle, NULL, SDL_FLIP_NONE);
 }

@@ -21,33 +21,30 @@ InputHandler::~InputHandler()
 InputHandler::InputHandler()
 {
 	clear();
-	keystate = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
+	keyState_ = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
 }
 
 void InputHandler::clear()
 {
 	for (int i = 0; i < 3; i++)
-		MouseButtons[i] = false;
+		mouseButtons_[i] = false;
 }
 
 std::pair<int, int> InputHandler::getMousePos()
 {
-	return MousePosition;
+	return mousePosition_;
 }
-
-
 
 bool InputHandler::isMouseButtonDown(int buttonNumber)
 {
-	return MouseButtons[buttonNumber];
+	return mouseButtons_[buttonNumber];
 }
-
 
 bool InputHandler::isKeyDown(SDL_Scancode key)
 {
-	if (keystate != nullptr)
+	if (keyState_ != nullptr)
 	{
-		if (keystate[key] == 1)
+		if (keyState_[key] == 1)
 			return true;
 		else
 			return false;
@@ -100,27 +97,25 @@ void InputHandler::update()
 
 void InputHandler::onMouseMotion(SDL_Event& Event)
 {
-	MousePosition.first = Event.motion.x;
-	MousePosition.second = Event.motion.y;
+	mousePosition_.first = Event.motion.x;
+	mousePosition_.second = Event.motion.y;
 }
 
 void InputHandler::onMouseButtonDown(SDL_Event& Event)
 {
 	if (Event.button.button == SDL_BUTTON_LEFT)
 	{
-		MouseButtons[0] = true;
+		mouseButtons_[0] = true;
 		return;
 	}
-
 	if (Event.button.button == SDL_BUTTON_MIDDLE)
 	{
-		MouseButtons[1] = true;
+		mouseButtons_[1] = true;
 		return;
 	}
-
 	if (Event.button.button == SDL_BUTTON_RIGHT)
 	{
-		MouseButtons[2] = true;
+		mouseButtons_[2] = true;
 		return;
 	}
 }
@@ -129,19 +124,17 @@ void InputHandler::onMouseButtonUp(SDL_Event& Event)
 {
 	if (Event.button.button == SDL_BUTTON_LEFT)
 	{
-		MouseButtons[0] = false;
+		mouseButtons_[0] = false;
 		return;
 	}
-
 	if (Event.button.button == SDL_BUTTON_MIDDLE)
 	{
-		MouseButtons[1] = false;
+		mouseButtons_[1] = false;
 		return;
 	}
-
 	if (Event.button.button == SDL_BUTTON_RIGHT)
 	{
-		MouseButtons[2] = false;
+		mouseButtons_[2] = false;
 		return;
 	}
 }
@@ -150,60 +143,52 @@ void InputHandler::onKeyDown(SDL_Event& Event)
 {
 	if (Event.key.type == SDL_SCANCODE_RIGHT)
 	{
-		keystate[SDL_SCANCODE_RIGHT] = true;
+		keyState_[SDL_SCANCODE_RIGHT] = true;
 		return;
 	}
-
 	if (Event.key.type == SDL_SCANCODE_LEFT)
 	{
-		keystate[SDL_SCANCODE_LEFT] = true;
+		keyState_[SDL_SCANCODE_LEFT] = true;
 		return;
 	}
-
 	if (Event.key.type == SDL_SCANCODE_UP)
 	{
-		keystate[SDL_SCANCODE_UP] = true;
+		keyState_[SDL_SCANCODE_UP] = true;
 		return;
 	}
-
 	if (Event.key.type == SDL_SCANCODE_DOWN)
 	{
-		keystate[SDL_SCANCODE_DOWN] = true;
+		keyState_[SDL_SCANCODE_DOWN] = true;
 		return;
 	}
 	//Uint32 key = Event.key.type;
-	//keystate[key] = true;
-
+	//keyState_[key] = true;
 }
 
 void InputHandler::onKeyUp(SDL_Event& Event)
 {
 	if (Event.key.type == SDL_SCANCODE_RIGHT)
 	{
-		keystate[SDL_SCANCODE_RIGHT] = false;
+		keyState_[SDL_SCANCODE_RIGHT] = false;
 		return;
 	}
-
 	if (Event.key.type == SDL_SCANCODE_LEFT)
 	{
-		keystate[SDL_SCANCODE_LEFT] = false;
+		keyState_[SDL_SCANCODE_LEFT] = false;
 		return;
 	}
-
 	if (Event.key.type == SDL_SCANCODE_UP)
 	{
-		keystate[SDL_SCANCODE_UP] = false;
+		keyState_[SDL_SCANCODE_UP] = false;
 		return;
 	}
-
 	if (Event.key.type == SDL_SCANCODE_DOWN)
 	{
-		keystate[SDL_SCANCODE_DOWN] = false;
+		keyState_[SDL_SCANCODE_DOWN] = false;
 		return;
 	}
-
 	//Uint32 key = Event.key.type;
-	//keystate[key] = false;
+	//keyState_[key] = false;
 }
 
 
