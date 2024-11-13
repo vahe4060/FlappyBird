@@ -12,18 +12,40 @@ Game::Game()
 
 Game::~Game()
 {
+}
+
+void Game::run()
+{
+	int frameStart, frameEnd, FrameDuration;
+
+    if (!init()) {
+        std::cerr << "Couldn't initialize Game\n";
+        return;
+    }
+    while (isRunning())
+    {
+        frameStart = SDL_GetTicks();
+        update();
+        handleEvents();
+        render();
+        frameEnd = SDL_GetTicks();
+        FrameDuration = frameEnd - frameStart;
+        if (FRAME_MS > FrameDuration) SDL_Delay(FRAME_MS - FrameDuration);
+    }
+    exit();
+}
+
+void Game::exit()
+{
+	gameStateMachine_.popState();
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 }
 
-Game* Game::instance_ = nullptr;
-
-Game* Game::instance()
+Game *Game::instance()
 {
-	if (instance_ == nullptr)
-		instance_ = new Game();
-	assert(instance_);
-	return instance_;
+	static Game	instance_;
+	return &instance_;
 }
 
 bool Game::init(int flags)

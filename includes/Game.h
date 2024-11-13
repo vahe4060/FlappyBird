@@ -18,22 +18,26 @@
 class Game
 {
 private:
-	static Game* instance_;
 	Game();
 	~Game();
 public:
+	Game(const Game &) = delete;
+	Game &operator=(const Game &) = delete;
 	static Game *instance();
-	SDL_Renderer *getRenderer() { return renderer_; }
-	GameStateMachine *getStateMachine() { return &gameStateMachine_; }
-	bool isRunning() { return isRunning_; }
-	bool init(int flags = SDL_WINDOW_SHOWN);
-	void update();
-	void render();
-	void handleEvents();
+	void run();
 	void quit();
+	bool isRunning() { return isRunning_; }
 	void newGame();
 	void gameOver(int score);
 	void openMenu();
+private:
+	SDL_Renderer *getRenderer() { return renderer_; }
+	GameStateMachine *getStateMachine() { return &gameStateMachine_; }
+	bool init(int flags = SDL_WINDOW_SHOWN);
+	void exit();
+	void update();
+	void render();
+	void handleEvents();
 private:
 	SDL_Window *window_;
 	SDL_Renderer *renderer_;

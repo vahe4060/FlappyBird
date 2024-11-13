@@ -8,9 +8,9 @@ class TextureManager
 private:
 	TextureManager();
 	~TextureManager();
-	static TextureManager* instance_;
-
 public:
+	TextureManager(const TextureManager &) = delete;
+	TextureManager &operator=(const TextureManager &) = delete;
 	static TextureManager* instance();
 	SDL_Renderer *getRenderer() { return renderer_; }
 	void setRenderer(SDL_Renderer *r) { renderer_ = r; }

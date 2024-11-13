@@ -6,11 +6,11 @@
 class InputHandler
 {
 private:
-	static InputHandler *instance_;
 	InputHandler();
 	~InputHandler();
-
 public:
+	InputHandler(const InputHandler &) = delete;
+	InputHandler &operator=(const InputHandler &) = delete;
 	static InputHandler *instance();
 	void update();
 	void clear();

@@ -14,14 +14,10 @@ TextureManager::~TextureManager()
 	textureMap_.clear();
 }
 
-TextureManager* TextureManager::instance_ = nullptr;
-
-TextureManager* TextureManager::instance()
+TextureManager *TextureManager::instance()
 {
-	if (instance_ == nullptr)
-		instance_ = new TextureManager();
-	assert(instance_);
-	return instance_;
+	static TextureManager instance_;
+	return &instance_;
 }
 
 bool TextureManager::load(const char *path, const char *id)

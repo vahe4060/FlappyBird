@@ -3,19 +3,14 @@
 #include "Game.h"
 
 
-InputHandler* InputHandler::instance_ = nullptr;
-
-InputHandler* InputHandler::instance()
+InputHandler *InputHandler::instance()
 {
-	if (instance_ == nullptr)
-		instance_ = new InputHandler();
-
-	return instance_;
+	static InputHandler instance_;
+	return &instance_;
 }
 
 InputHandler::~InputHandler()
 {
-	std::cout << "\n\ninput handler went out of scope....\n\n";
 }
 
 InputHandler::InputHandler()
@@ -51,8 +46,6 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
 	}
 	return false;
 }
-
-
 
 void InputHandler::update()
 {
