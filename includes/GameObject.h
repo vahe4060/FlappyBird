@@ -2,21 +2,22 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "TextureManager.h"
+#include <iostream>
 
 class GameObject
 {
 public:
-	GameObject(int x, int y, int w, int h, const char *id) :
-		x_(x),
-		y_(y),
-		width_(w),
-		height_(h),
-		id_(id),
-		currentFrame_(0),
-		rotateAngle_(0)
+	GameObject(int x, int y, int w, int h, const char *id)
+		: x_(x)
+		, y_(y)
+		, width_(w)
+		, height_(h)
+		, currentFrame_(0)
+		, rotateAngle_(0)
+		, id_(id)
 	{
 	}
-	virtual ~GameObject() 
+	virtual ~GameObject()
 	{
 		TextureManager::instance()->erase(id_);
 	}

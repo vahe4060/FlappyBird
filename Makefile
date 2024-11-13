@@ -1,3 +1,9 @@
+# Makefile colors
+RED = \033[31m
+GREEN = \033[32m
+YELLOW = \033[33m
+RESET = \033[0m
+
 # Compiler and Flags
 CXX := g++
 CXX_FLAGS := -std=c++17 -Wall -Wextra
@@ -31,6 +37,7 @@ INCLUDES = $(INCLUDES_DIR)/ClickButton.h \
 SRC = $(SRC_DIR)/main.cpp \
       $(SRC_DIR)/ClickButton.cpp \
       $(SRC_DIR)/Game.cpp \
+      $(SRC_DIR)/GameStates.cpp \
       $(SRC_DIR)/GameOverState.cpp \
       $(SRC_DIR)/GameStateMachine.cpp \
       $(SRC_DIR)/InputHandler.cpp \
@@ -48,19 +55,23 @@ all: $(TARGET_EXE)
 	@ln -sf $(TARGET_EXE) $(TARGET)
 
 $(TARGET_EXE): $(OBJ)
-	$(CXX) $(CXX_FLAGS) -o $@ $^ $(SDL2_LIBS) $(SDL2IMAGE_LIBS)
+	@echo "$(GREEN)Compiling $@$(RESET)"
+	@$(CXX) $(CXX_FLAGS) -o $@ $^ $(SDL2_LIBS) $(SDL2IMAGE_LIBS)
 
 debug: $(TARGET_DBG_EXE)
 	@ln -sf $(TARGET_DBG_EXE) $(TARGET)
 
 $(TARGET_DBG_EXE): $(OBJ_DBG)
+	@echo "$(GREEN)Compiling $@$(RESET)"
 	$(CXX) $(CXX_FLAGS_DBG) -o $(TARGET_DBG_EXE) $^ $(SDL2_LIBS) $(SDL2IMAGE_LIBS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDES)
+	@echo "$(GREEN)Compiling $@$(RESET)"
 	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXX_FLAGS) $(SDL2_FLAGS) $(SDL2IMAGE_FLAGS) -I$(INCLUDES_DIR) -o $@ -c $<
+	@$(CXX) $(CXX_FLAGS) $(SDL2_FLAGS) $(SDL2IMAGE_FLAGS) -I$(INCLUDES_DIR) -o $@ -c $<
 
 $(BUILD_DBG_DIR)/%.o: $(SRC_DIR)/%.cpp $(INCLUDES)
+	@echo "$(GREEN)Compiling $@$(RESET)"
 	@mkdir -p $(BUILD_DBG_DIR)
 	$(CXX) $(CXX_FLAGS_DBG) $(SDL2_FLAGS) $(SDL2IMAGE_FLAGS) -I$(INCLUDES_DIR) -o $@ -c $<
 

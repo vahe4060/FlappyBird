@@ -1,19 +1,16 @@
 #include "Game.h"
 #include "Obstacle.h"
 #include <time.h>
+#include <cassert>
 
 Obstacle::Obstacle(int x, int y, int w, int h, const char* id)
 	: GameObject(x, y, w, h, id) 
 {
-	if (!TextureManager::instance()->load("./assets/obstacle.png", id_))
-		std::cout << "Cannot load ./assets/obstacle.png" << std::endl;
-	std::cout << "Constructed " << id_ << std::endl;
+	assert(TextureManager::instance()->load("./assets/obstacle.png", id_));
 }
 
 Obstacle::~Obstacle()
 {
-	std::cout << "Destructed " << id_ << std::endl;
-	GameObject::~GameObject();
 }
 
 void Obstacle::update()

@@ -9,7 +9,9 @@ TextureManager::TextureManager()
 
 TextureManager::~TextureManager()
 {
-	eraseAll();
+	for(auto &it: textureMap_)
+		SDL_DestroyTexture(it.second);
+	textureMap_.clear();
 }
 
 TextureManager* TextureManager::instance_ = nullptr;
@@ -22,17 +24,10 @@ TextureManager* TextureManager::instance()
 	return instance_;
 }
 
-void TextureManager::eraseAll()
-{
-	for(auto it = textureMap_.begin(); it != textureMap_.end(); ++it)
-		SDL_DestroyTexture(it->second);
-	textureMap_.clear();
-}
-
 bool TextureManager::load(const char *path, const char *id)
 {
 	assert(renderer_);
-	SDL_Surface* tempSurf = IMG_Load(path);
+	SDL_Surface *tempSurf = IMG_Load(path);
 	textureMap_[id] = SDL_CreateTextureFromSurface(renderer_, tempSurf);
 	SDL_FreeSurface(tempSurf);
 	return (textureMap_[id] != NULL);
@@ -48,6 +43,7 @@ void TextureManager::draw(const char* id, int x, int y, int w, int h,
 						  int frame, int zoom, int rotateAngle)
 {
 	assert(renderer_);
+	assert(textureMap_[id]);
 	SDL_Rect srcRect = {.x = w * frame, .y = 0, .w = w, .h = h};
 	SDL_Rect destRect = {.x = x, .y = y, .w = zoom * w, .h = zoom * h};
 	SDL_RenderCopyEx(renderer_, textureMap_[id], &srcRect, &destRect,

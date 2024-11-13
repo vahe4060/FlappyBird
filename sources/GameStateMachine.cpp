@@ -1,34 +1,38 @@
 #include "GameStateMachine.h"
+#include <cassert>
 
+GameStateMachine::GameStateMachine()
+{
+}
 
 GameStateMachine::~GameStateMachine()
 {
-	while (!states_.empty())
-		popState();
+	while (!states_.empty()) {
+		delete states_.top();
+		states_.pop();
+	}
+}
+
+void GameStateMachine::pushState(GameState *state)
+{
+	states_.push(state);
 }
 
 void GameStateMachine::popState()
 {
-	if (!states_.empty())
-	{
-		delete states_.back();
-		states_.pop_back();
-	}
-}
-
-void GameStateMachine::pushState(GameState *newstate)
-{
-	states_.push_back(newstate);
+	assert(!states_.empty());
+	delete states_.top();
+	states_.pop();
 }
 
 void GameStateMachine::update()
 {
-	if (!states_.empty())
-		states_.back()->update();
+	assert(!states_.empty());
+	states_.top()->update();
 }
 
 void GameStateMachine::render()
 {
-	if (!states_.empty())
-		states_.back()->render();
+	assert(!states_.empty());
+	states_.top()->render();
 }

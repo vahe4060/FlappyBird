@@ -1,17 +1,18 @@
 #pragma once
 #include "GameStates.h"
 #include <iostream>
-#include <vector>
+#include <stack>
 
 class GameStateMachine
 {
 public:
+	GameStateMachine();
 	~GameStateMachine();
 	void popState();
 	void pushState(GameState *);
 	void update();
 	void render();
 private:
-	std::vector<GameState *> states_;
+	std::stack<GameState *> states_;
 };
 

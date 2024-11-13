@@ -5,40 +5,47 @@
 #include <vector>
 #include "ClickButton.h"
 
+class Game;
+
 
 class GameState
 {
 public:
-	GameState() {};
-	virtual ~GameState() {};
+	GameState(int score, Game *parent);
+	virtual ~GameState();
 	virtual void update() = 0;
 	virtual void render() = 0;
-private:
+	int getScore() { return score_; }
+protected:
+	void drawScore_(int zoom, int x, int y);
+	int score_;
+	Game *parent_;
 };
+
 
 class PlayState : public GameState
 {
 public:
-	PlayState();
-	~PlayState();
-	virtual void update();
-	virtual void render();
-	void pauseGame();
-private:
+	PlayState(Game *parent);
+	virtual ~PlayState();
+	virtual void update() override;
+	virtual void render() override;
+protected:
 	Player bird_;
 	std::vector<Obstacle> objects_;
 	ClickButton pauseButton_;
-	bool pause_ = false;
+	bool pause_;
 };
+
 
 class MenuState : public GameState
 {
 public:
-	MenuState();
-	~MenuState();
-	void update() override;
-	void render() override;
-private:
+	MenuState(int record, Game *parent);
+	virtual ~MenuState();
+	virtual void update() override;
+	virtual void render() override;
+protected:
 	Player bird_;
 };
 
@@ -46,11 +53,11 @@ private:
 class GameOverState : public GameState
 {
 public:
-	GameOverState();
-	~GameOverState();
-	void update() override;
-	void render() override;
-private:
+	GameOverState(int score, Game *parent);
+	virtual ~GameOverState();
+	virtual void update() override;
+	virtual void render() override;
+protected:
 	ClickButton retryButton_;
 };
 

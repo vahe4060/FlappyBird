@@ -3,16 +3,14 @@
 
 #include "Game.h"
 
-int main(int argc,  char **argv)
+int main(void)
 {
-    const int FPS = 30;
     int frameStart, frameEnd, FrameDuration;
 
     if (!Game::instance()->init()) {
-        std::cerr << "couldn't initialize Game..\n";
+        std::cerr << "Couldn't initialize Game\n";
         return 1;
     }
-
     while (Game::instance()->isRunning())
     {
         frameStart = SDL_GetTicks();
@@ -23,9 +21,7 @@ int main(int argc,  char **argv)
 
         frameEnd = SDL_GetTicks();
         FrameDuration = frameEnd - frameStart;
-        if (1000 / FPS > FrameDuration) SDL_Delay(1000 / FPS - FrameDuration);
+        if (FRAME_MS > FrameDuration) SDL_Delay(FRAME_MS - FrameDuration);
     }
-    Game::instance()->clean();
-
     return 0;
 }

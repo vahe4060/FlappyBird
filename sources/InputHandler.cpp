@@ -90,7 +90,6 @@ void InputHandler::update()
 		default:
 			break;
 		}
-		//SDL_Delay(10);
 	}
 
 }

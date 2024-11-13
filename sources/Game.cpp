@@ -4,14 +4,16 @@
 Game::Game() 
 	: window_(nullptr)
 	, renderer_(nullptr)
-	, gameStateMachine_(GameStateMachine())
-	, score_(0)
+	, record_(0)
 	, isRunning_(false)
+	, gameStateMachine_()
 {
 }
 
 Game::~Game()
 {
+	SDL_DestroyRenderer(renderer_);
+	SDL_DestroyWindow(window_);
 }
 
 Game* Game::instance_ = nullptr;
@@ -36,26 +38,11 @@ bool Game::init(int flags)
 		if (!renderer_)
 			return false;
 		TextureManager::instance()->setRenderer(renderer_);
-		if (!TextureManager::instance()->load("./assets/background.png", "background"))
-			return false;
-		if (!TextureManager::instance()->load("./assets/button.png", "button"))
-			return false;
-		if (!TextureManager::instance()->load("./assets/numbers.png", "numbers"))
-			return false;
-		gameStateMachine_.pushState(new MenuState());
+		gameStateMachine_.pushState(new MenuState(record_, this));
 		isRunning_ = true;
 		return true;
 	}
 	return false;
-}
-
-void Game::clean()
-{
-	TextureManager::instance()->eraseAll();
-	gameStateMachine_.popState();
-	gameStateMachine_.popState();
-	SDL_DestroyRenderer(renderer_);
-	SDL_DestroyWindow(window_);
 }
 
 void Game::update()
@@ -66,7 +53,7 @@ void Game::update()
 
 void Game::render()
 {
-	TextureManager::instance()->draw("background", 0, 0, WINWIDTH, WINHEIGHT, 0);
+	SDL_RenderClear(renderer_);
 	gameStateMachine_.render();
 	SDL_RenderPresent(renderer_);
 }
@@ -80,30 +67,22 @@ void Game::quit()
 	isRunning_ = false;
 }
 
-void Game::addScore()
+void Game::newGame()
 {
-	score_++;
+	gameStateMachine_.popState();
+	gameStateMachine_.pushState(new PlayState(this));
 }
 
-void Game::resetScore()
+void Game::gameOver(int score)
 {
-	score_ = 0;
+	gameStateMachine_.popState();
+	gameStateMachine_.pushState(new GameOverState(score, this));
+	if (score > record_)
+		record_ = score;
 }
 
-void Game::printScore(int zoom, int x, int y)
+void Game::openMenu()
 {
-	int myscore = score_;
-	int i = 1;
-	while (myscore /= 10)
-		i++;
-	myscore = score_;
-
-	for (int j = i; j > 0; j--)
-	{
-		int digit = myscore / pow(10, j - 1);
-
-		TextureManager::instance()->draw("numbers", x - zoom * 10 * j, y, 
-										 FONTWIDTH, FONTHEIGHT, digit, zoom);
-		myscore -= digit * pow(10, j - 1);
-	}
+	gameStateMachine_.popState();
+	gameStateMachine_.pushState(new MenuState(record_, this));
 }
