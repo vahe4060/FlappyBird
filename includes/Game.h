@@ -12,7 +12,7 @@
 #define WINWIDTH 432
 #define FONTWIDTH 8
 #define FONTHEIGHT 10
-#define FPS 25
+#define FPS 165
 #define FRAME_MS 1000.0 / FPS
 
 class Game

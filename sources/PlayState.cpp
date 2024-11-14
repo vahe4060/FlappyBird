@@ -11,15 +11,15 @@
 
 PlayState::PlayState(GameStateMachine *parent)
 	: GameState(0, parent)
-	, bird_(100, 600, 17, 12, "player")
+	, bird_(100, 400, 17, 12, "player")
 	, pauseButton_(380, 10, 35, 35, "pause", "./assets/pause.png")
 	, pause_(false)
 {
     assert(TextureManager::instance()->load("./assets/background.png",
                                             "background"));
 	objects_.reserve(10);
-	objects_.emplace_back(300, 200, 39, 1300, "obstacle1");
-	objects_.emplace_back(600, 400, 39, 1300, "obstacle2");
+	objects_.emplace_back(300, -300, 39, 1300, "obstacle1");
+	objects_.emplace_back(600, -200, 39, 1300, "obstacle2");
 }
 
 PlayState::~PlayState()
@@ -33,7 +33,7 @@ void PlayState::update()
 	if (pauseButton_.clicked() 
 		|| InputHandler::instance()->isKeyDown(SDL_SCANCODE_ESCAPE))
 		pause_ = true;
-	if (InputHandler::instance()->isMouseButtonDown(0))
+	if (pause_ && InputHandler::instance()->isMouseButtonDown(0))
 		pause_ = false;
 	if (!pause_)
 	{
@@ -41,20 +41,16 @@ void PlayState::update()
 			it.update();
 		bird_.update();
 		pauseButton_.update();
-
-		if (bird_.x() >= WINHEIGHT)
+		if (bird_.y() > WINHEIGHT || bird_.y() < 0)
 			parent_->newGameOverState(score_);
 		for (auto &it: objects_)
 		{
-			if (bird_.x() + 34 > it.x() && bird_.y() < it.y() + 39)
+			if (bird_.isCollidingObstacle(&it))
 			{
-				if (bird_.y() < it.y() - 50 || bird_.y() + 24 > it.y() + 50)
-				{
-					parent_->newGameOverState(score_);
-					break;
-				}
+				parent_->newGameOverState(score_);
+				break;
 			}
-			if (it.x() == 100)
+			if (it.x() == bird_.x())
 				++score_;
 		}
 	}

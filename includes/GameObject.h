@@ -23,8 +23,10 @@ public:
 	}
 	virtual void update() = 0;
 	virtual void draw() = 0;
-	virtual int x() { return x_; }
- 	virtual int y() { return y_; }
+	int x() { return x_; }
+ 	int y() { return y_; }
+ 	int w() { return width_; }
+ 	int h() { return height_; }
 protected:
 	int x_, y_;
 	int width_, height_;

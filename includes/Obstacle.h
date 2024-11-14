@@ -4,12 +4,12 @@
 class Obstacle :public GameObject
 {
 public:
-	Obstacle(int x, int y, int w, int h, const char *id);
+	Obstacle(int x, int y, int w, int h, const char *id, int tubeHeight = 600);
 	~Obstacle();
 	void update() override;
 	void draw() override;
-	int x() override { return x_; }
-	int y() override { return (y_ + 50); }
+	int tubeSpacing() { return h() - 2 * tubeHeight_; }
+	int tubeHeight() { return tubeHeight_; }
 private:
-	void genNext();
+	int tubeHeight_;
 };

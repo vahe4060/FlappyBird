@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+class Obstacle;
+
 class Player: public GameObject
 {
 public:
@@ -8,8 +10,8 @@ public:
 	~Player();
 	void update() override;
 	void draw() override;
-	void jump();
+	bool isCollidingObstacle(Obstacle *other);
 private:
-
+	void jump();
 };
 

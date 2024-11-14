@@ -17,7 +17,6 @@ Game::~Game()
 void Game::run()
 {
 	int frameStart, frameEnd, FrameDuration;
-
     if (!init()) {
         std::cerr << "Couldn't initialize Game\n";
         return;
@@ -30,7 +29,8 @@ void Game::run()
         render();
         frameEnd = SDL_GetTicks();
         FrameDuration = frameEnd - frameStart;
-        if (FRAME_MS > FrameDuration) SDL_Delay(FRAME_MS - FrameDuration);
+        if (FRAME_MS > FrameDuration)
+			SDL_Delay(FRAME_MS - FrameDuration);
     }
     cleanup();
 }
