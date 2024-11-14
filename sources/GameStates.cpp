@@ -2,7 +2,7 @@
 #include "Game.h"
 #include <cassert>
 
-GameState::GameState(int score, Game *parent)
+GameState::GameState(int score, GameStateMachine *parent)
 		: score_(score)
 		, parent_(parent)
 {

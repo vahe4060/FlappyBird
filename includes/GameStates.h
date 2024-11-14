@@ -5,13 +5,12 @@
 #include <vector>
 #include "ClickButton.h"
 
-class Game;
-
+class GameStateMachine;
 
 class GameState
 {
 public:
-	GameState(int score, Game *parent);
+	GameState(int score, GameStateMachine *parent);
 	virtual ~GameState();
 	virtual void update() = 0;
 	virtual void render() = 0;
@@ -19,14 +18,14 @@ public:
 protected:
 	void drawScore_(int zoom, int x, int y);
 	int score_;
-	Game *parent_;
+	GameStateMachine *parent_;
 };
 
 
 class PlayState : public GameState
 {
 public:
-	PlayState(Game *parent);
+	PlayState(GameStateMachine *parent);
 	virtual ~PlayState();
 	virtual void update() override;
 	virtual void render() override;
@@ -41,7 +40,8 @@ protected:
 class MenuState : public GameState
 {
 public:
-	MenuState(int record, Game *parent);
+	static int record_;
+	MenuState(int score, GameStateMachine *parent);
 	virtual ~MenuState();
 	virtual void update() override;
 	virtual void render() override;
@@ -53,7 +53,7 @@ protected:
 class GameOverState : public GameState
 {
 public:
-	GameOverState(int score, Game *parent);
+	GameOverState(int score, GameStateMachine *parent);
 	virtual ~GameOverState();
 	virtual void update() override;
 	virtual void render() override;

@@ -22,7 +22,7 @@ void Game::run()
         std::cerr << "Couldn't initialize Game\n";
         return;
     }
-    while (isRunning())
+    while (isRunning_)
     {
         frameStart = SDL_GetTicks();
         update();
@@ -32,12 +32,12 @@ void Game::run()
         FrameDuration = frameEnd - frameStart;
         if (FRAME_MS > FrameDuration) SDL_Delay(FRAME_MS - FrameDuration);
     }
-    exit();
+    cleanup();
 }
 
-void Game::exit()
+void Game::cleanup()
 {
-	gameStateMachine_.popState();
+	gameStateMachine_.stop();
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 }
@@ -60,7 +60,7 @@ bool Game::init(int flags)
 		if (!renderer_)
 			return false;
 		TextureManager::instance()->setRenderer(renderer_);
-		gameStateMachine_.pushState(new MenuState(record_, this));
+		gameStateMachine_.start();
 		isRunning_ = true;
 		return true;
 	}
@@ -87,24 +87,4 @@ void Game::handleEvents()
 void Game::quit()
 {
 	isRunning_ = false;
-}
-
-void Game::newGame()
-{
-	gameStateMachine_.popState();
-	gameStateMachine_.pushState(new PlayState(this));
-}
-
-void Game::gameOver(int score)
-{
-	gameStateMachine_.popState();
-	gameStateMachine_.pushState(new GameOverState(score, this));
-	if (score > record_)
-		record_ = score;
-}
-
-void Game::openMenu()
-{
-	gameStateMachine_.popState();
-	gameStateMachine_.pushState(new MenuState(record_, this));
 }

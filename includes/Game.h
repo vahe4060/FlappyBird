@@ -20,21 +20,16 @@ class Game
 private:
 	Game();
 	~Game();
-public:
 	Game(const Game &) = delete;
 	Game &operator=(const Game &) = delete;
+public:
 	static Game *instance();
 	void run();
 	void quit();
 	bool isRunning() { return isRunning_; }
-	void newGame();
-	void gameOver(int score);
-	void openMenu();
 private:
-	SDL_Renderer *getRenderer() { return renderer_; }
-	GameStateMachine *getStateMachine() { return &gameStateMachine_; }
 	bool init(int flags = SDL_WINDOW_SHOWN);
-	void exit();
+	void cleanup();
 	void update();
 	void render();
 	void handleEvents();

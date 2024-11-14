@@ -9,7 +9,7 @@
 #include <cassert>
 
 
-PlayState::PlayState(Game *parent)
+PlayState::PlayState(GameStateMachine *parent)
 	: GameState(0, parent)
 	, bird_(100, 600, 17, 12, "player")
 	, pauseButton_(380, 10, 35, 35, "pause", "./assets/pause.png")
@@ -43,14 +43,14 @@ void PlayState::update()
 		pauseButton_.update();
 
 		if (bird_.x() >= WINHEIGHT)
-			parent_->gameOver(score_);
+			parent_->newGameOverState(score_);
 		for (auto &it: objects_)
 		{
 			if (bird_.x() + 34 > it.x() && bird_.y() < it.y() + 39)
 			{
 				if (bird_.y() < it.y() - 50 || bird_.y() + 24 > it.y() + 50)
 				{
-					parent_->gameOver(score_);
+					parent_->newGameOverState(score_);
 					break;
 				}
 			}

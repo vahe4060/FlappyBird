@@ -2,7 +2,7 @@
 #include "Game.h"
 #include <cassert>
 
-GameOverState::GameOverState(int score, Game *parent)
+GameOverState::GameOverState(int score, GameStateMachine *parent)
     : GameState(score, parent)
     , retryButton_(190, 280, 46, 46, "retry", "./assets/retry.png")
 {
@@ -25,7 +25,7 @@ void GameOverState::update()
 {
     retryButton_.update();
     if (retryButton_.clicked())
-        parent_->newGame();
+        parent_->newPlayState();
 }
 
 void GameOverState::render()

@@ -3,10 +3,15 @@
 #include "Game.h"
 #include <cassert>
 
-MenuState::MenuState(int record, Game *parent)
-    : GameState(record, parent)
+int MenuState::record_ = 0;
+
+MenuState::MenuState(int score, GameStateMachine *parent)
+    : GameState(0, parent)
     , bird_(Player(180, 250, 17, 12, "player"))
 {
+    if (score > record_)
+        record_ = score;
+    score_ = record_;
     assert(TextureManager::instance()->load("./assets/logo.png", "logo"));
     assert(TextureManager::instance()->load("./assets/touch.png", "touch"));
     assert(TextureManager::instance()->load("./assets/background.png",
@@ -23,7 +28,7 @@ MenuState::~MenuState()
 void MenuState::update()
 {
     if (InputHandler::instance()->isMouseButtonDown(0))
-        parent_->newGame();
+        parent_->newPlayState();
 }
 
 void MenuState::render()

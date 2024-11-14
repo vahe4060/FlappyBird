@@ -7,10 +7,6 @@ GameStateMachine::GameStateMachine()
 
 GameStateMachine::~GameStateMachine()
 {
-	while (!states_.empty()) {
-		delete states_.top();
-		states_.pop();
-	}
 }
 
 void GameStateMachine::pushState(GameState *state)
@@ -36,3 +32,37 @@ void GameStateMachine::render()
 	assert(!states_.empty());
 	states_.top()->render();
 }
+
+void GameStateMachine::start()
+{
+	pushState(new MenuState(0, this));
+}
+
+void GameStateMachine::stop()
+{
+	while (!states_.empty()) {
+		delete states_.top();
+		states_.pop();
+	}
+}
+
+void GameStateMachine::newPlayState()
+{
+	popState();
+	pushState(new PlayState(this));
+}
+
+void GameStateMachine::newGameOverState(int score)
+{
+	popState();
+	pushState(new GameOverState(score, this));
+	if (score > MenuState::record_)
+		MenuState::record_ = score;
+}
+
+void GameStateMachine::newMenuState()
+{
+	popState();
+	pushState(new MenuState(0, this));
+}
+
