@@ -13,11 +13,9 @@ void ClickButton::update()
 	if (InputHandler::instance()->getMousePos().first > x_
 		&& InputHandler::instance()->getMousePos().first < x_ + width_
 		&& InputHandler::instance()->getMousePos().second > y_
-		&& InputHandler::instance()->getMousePos().second < y_ + height_)
-	{
-		if (InputHandler::instance()->isMouseButtonDown(0))
+		&& InputHandler::instance()->getMousePos().second < y_ + height_
+		&& InputHandler::instance()->isMouseButtonDown(0))
 		clicked_ = true;
-	}
 	else
 		clicked_ = false;
 }

@@ -15,12 +15,12 @@ InputHandler::~InputHandler()
 
 InputHandler::InputHandler()
 {
-	clear();
-	keyState_ = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
+	reset();
 }
 
-void InputHandler::clear()
+void InputHandler::reset()
 {
+	keyState_ = const_cast<Uint8*>(SDL_GetKeyboardState(NULL));
 	for (int i = 0; i < 3; i++)
 		mouseButtons_[i] = false;
 }

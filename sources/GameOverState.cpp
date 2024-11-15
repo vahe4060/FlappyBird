@@ -4,14 +4,19 @@
 
 GameOverState::GameOverState(int score, GameStateMachine *parent)
     : GameState(score, parent)
-    , retryButton_(190, 280, 46, 46, "retry", "./assets/retry.png")
+    , retryButton_(86, 400, 115, 39, "retry", "./assets/retry.png")
+    , menuButton_(231, 400, 115, 39, "menu", "./assets/menu.png")
 {
     assert(TextureManager::instance()->load("./assets/gameover.png", 
                                             "gameover"));
-    assert(TextureManager::instance()->load("./assets/score.png", 
-                                            "score"));
     assert(TextureManager::instance()->load("./assets/background.png",
                                             "background"));
+    if (score > MenuState::record_)
+        assert(TextureManager::instance()->load("./assets/newRecordBadge.png", 
+                                            "badge"));
+    else
+        assert(TextureManager::instance()->load("./assets/scoreBadge.png", 
+                                            "badge"));
 }
 
 GameOverState::~GameOverState()
@@ -24,15 +29,20 @@ GameOverState::~GameOverState()
 void GameOverState::update()
 {
     retryButton_.update();
+    menuButton_.update();
     if (retryButton_.clicked())
-        parent_->newPlayState();
+        parent_->newPlayState();  
+    else if (menuButton_.clicked())
+        parent_->newMenuState();
 }
 
 void GameOverState::render()
 {
 	TextureManager::instance()->draw("background", 0, 0, WINWIDTH, WINHEIGHT, 0);
-    TextureManager::instance()->draw("gameover", 75, 50, 96, 23, 0, 3);
-    TextureManager::instance()->draw("score", 80, 202, 40, 13, 0, 3);
+    TextureManager::instance()->draw("gameover", 75, 60, 96, 23, 0, 3);
+    TextureManager::instance()->draw("badge", 78, 215, 275, 139, 0, 1);
     retryButton_.draw();
-    drawScore_(4, 350, 200);
+    menuButton_.draw();
+    drawScore_(score_, 275, 255, 2);
+    drawScore_(MenuState::record_, 275, 310, 2);
 }

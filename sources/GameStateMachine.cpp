@@ -35,7 +35,7 @@ void GameStateMachine::render()
 
 void GameStateMachine::start()
 {
-	pushState(new MenuState(0, this));
+	pushState(new MenuState(this));
 }
 
 void GameStateMachine::stop()
@@ -63,6 +63,6 @@ void GameStateMachine::newGameOverState(int score)
 void GameStateMachine::newMenuState()
 {
 	popState();
-	pushState(new MenuState(0, this));
+	pushState(new MenuState(this));
 }
 

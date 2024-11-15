@@ -16,7 +16,7 @@ public:
 	virtual void render() = 0;
 	int getScore() { return score_; }
 protected:
-	void drawScore_(int zoom, int x, int y);
+	int drawScore_(int score, int x, int y, int zoom);
 	int score_;
 	GameStateMachine *parent_;
 };
@@ -41,7 +41,7 @@ class MenuState : public GameState
 {
 public:
 	static int record_;
-	MenuState(int score, GameStateMachine *parent);
+	MenuState(GameStateMachine *parent);
 	virtual ~MenuState();
 	virtual void update() override;
 	virtual void render() override;
@@ -59,5 +59,6 @@ public:
 	virtual void render() override;
 protected:
 	ClickButton retryButton_;
+	ClickButton menuButton_;
 };
 

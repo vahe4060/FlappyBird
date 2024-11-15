@@ -7,6 +7,7 @@ GameState::GameState(int score, GameStateMachine *parent)
 		, parent_(parent)
 {
     assert(parent_);
+    InputHandler::instance()->reset();
     assert(TextureManager::instance()->load("./assets/numbers.png",
                                             "numbers"));
 };
@@ -16,19 +17,16 @@ GameState::~GameState()
     TextureManager::instance()->erase("numbers");
 }
 
-void GameState::drawScore_(int zoom, int x, int y)
+int GameState::drawScore_(int score, int x, int y, int zoom)
 {
-    int myscore = score_;
-    int i = 1;
-    while (myscore /= 10)
-        i++;
-    myscore = score_;
-
-    for (int j = i; j > 0; j--)
+    if (score < 0)
+        return 0;
+    if (score >= 10)
     {
-        int digit = myscore / pow(10, j - 1);
-        TextureManager::instance()->draw("numbers", x - zoom * 10 * j, y, 
-                                         FONTWIDTH, FONTHEIGHT, digit, zoom);
-        myscore -= digit * pow(10, j - 1);
+        int len = drawScore_(score / 10, x, y, zoom);
+        return len + drawScore_(score % 10, x + len, y, zoom);
     }
+    TextureManager::instance()->draw("numbers", x, y, FONTWIDTH, FONTHEIGHT,
+                                     score, zoom);
+    return FONTWIDTH * zoom;
 }

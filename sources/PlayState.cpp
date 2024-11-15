@@ -12,7 +12,7 @@
 PlayState::PlayState(GameStateMachine *parent)
 	: GameState(0, parent)
 	, bird_(100, 400, 17, 12, "player")
-	, pauseButton_(380, 10, 35, 35, "pause", "./assets/pause.png")
+	, pauseButton_(WINWIDTH - 55, 20, 35, 35, "pause", "./assets/pause.png")
 	, pause_(false)
 {
     assert(TextureManager::instance()->load("./assets/background.png",
@@ -63,5 +63,5 @@ void PlayState::render()
 		it.draw();
 	pauseButton_.draw();
 	bird_.draw();
-	drawScore_(3, 240, 50);
+	drawScore_(score_, 200, 50, 3);
 }

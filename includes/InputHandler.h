@@ -13,7 +13,7 @@ public:
 	InputHandler &operator=(const InputHandler &) = delete;
 	static InputHandler *instance();
 	void update();
-	void clear();
+	void reset();
 	bool isKeyDown(SDL_Scancode key);
 	bool isMouseButtonDown(int buttonNumber);
 	std::pair<int, int> getMousePos();
