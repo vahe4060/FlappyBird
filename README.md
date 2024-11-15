@@ -3,7 +3,7 @@
 A simple implementation of the classic **Flappy Bird** game, built using the **SDL2** library.
 This project demonstrates basic game development concepts such as rendering, input handling, and collision detection using SDL2.
 
-[vid.webm](https://github.com/user-attachments/assets/04c8596c-f8e4-4250-add1-4baddc2bd978)
+![vid(1)](https://github.com/user-attachments/assets/5df6f5a0-395e-4de5-b1fe-aae6640900e4)
  
 ## How to run
 	git clone https://github.com/vahe4060/FlappyBird.git
