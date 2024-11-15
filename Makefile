@@ -81,4 +81,4 @@ clean:
 re: clean all
 
 
-.PHONY: all clean debug
+.PHONY: all clean debug re
