@@ -3,29 +3,25 @@
 #include <iostream>
 #include <SDL.h>
 
-class inputHandler
+class InputHandler
 {
 private:
-	static inputHandler* instance_;
-	inputHandler();
-	~inputHandler();
+	InputHandler();
+	~InputHandler();
 public:
-	static inputHandler* instance();
-
+	InputHandler(const InputHandler &) = delete;
+	InputHandler &operator=(const InputHandler &) = delete;
+	static InputHandler *instance();
 	void update();
-	void clear();
-
+	void reset();
 	bool isKeyDown(SDL_Scancode key);
 	bool isMouseButtonDown(int buttonNumber);
 	std::pair<int, int> getMousePos();
 
 private:
-
-	bool MouseButtons[3];
-	Uint8* keystate = nullptr;
-	std::pair<int, int> MousePosition;
-
-
+	bool mouseButtons_[3];
+	Uint8 *keyState_;
+	std::pair<int, int> mousePosition_;
 	void onKeyDown(SDL_Event&);
 	void onKeyUp(SDL_Event&);
 	void onMouseButtonDown(SDL_Event&);
