@@ -1,5 +1,4 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 #include "InputHandler.h"
 #include <iostream>
 #include "GameStateMachine.h"
@@ -40,5 +39,3 @@ private:
 	bool isRunning_;
 	GameStateMachine gameStateMachine_;
 };
-
-#endif
